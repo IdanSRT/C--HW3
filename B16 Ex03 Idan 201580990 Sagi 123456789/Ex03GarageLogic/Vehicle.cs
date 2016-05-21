@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ex03GarageLogic
 {
-    public class Class1
+    public class Vehicle
     {
-        //sadsadasd
+        string m_ModelName;
+        string m_LicenseNum;
+        float m_Energy;
+        //List<Wheel> m_Wheels;
     }
 }
