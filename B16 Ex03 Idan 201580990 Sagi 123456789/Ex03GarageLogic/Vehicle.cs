@@ -22,7 +22,6 @@ namespace Ex03.GarageLogic
             m_WheelsList = i_WeelsList;
         }
 
-
     }
 
 }
