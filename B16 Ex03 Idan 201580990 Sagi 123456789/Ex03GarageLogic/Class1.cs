@@ -8,6 +8,5 @@ namespace Ex03GarageLogic
 {
     public class Class1
     {
-        //sdflsdjflkjksdf
     }
 }
