@@ -31,7 +31,8 @@ namespace Ex03.GarageLogic
         }
         
 
-
+        // To Do
+        // delete all unnessecary fields in Class Vehicle 
         public Vehicle
             (string i_ModelName, string i_LisenseNum, float i_EnergyLeft, List<Wheel> i_WeelsList, eEnergyType i_EnergyType, float i_MaxEnergy)
         {
