@@ -70,26 +70,33 @@ namespace Ex03.GarageLogic
 
         public virtual eEnergyType EnergyType
         {
-            get { return m_FuleType; }
-            set { m_FuleType = value; }
+            get { return m_EnergyType; }
+            set { m_EnergyType = value; }
         }
 
         public bool AddEnergy(eEnergyType i_EnergyType, float i_EnergyAmountToAdd)
         {
-            bool wasEnergyAdded = false;
-            if (this.EnergyType == i_EnergyType)
+            try
             {
-                float totalAmount = this.EnergyLeft + i_EnergyAmountToAdd;
-                if (totalAmount <= this.m_MaxEnergy)
-                {
-                    this.EnergyLeft += i_EnergyAmountToAdd;
-                    wasEnergyAdded = true;
-                }
-            }
 
-            return wasEnergyAdded;    
+                bool wasEnergyAdded = false;
+
+                if (this.EnergyType == i_EnergyType)
+                {
+                    float totalAmount = this.EnergyLeft + i_EnergyAmountToAdd;
+                    if (totalAmount <= this.m_MaxEnergy)
+                    {
+                        this.EnergyLeft += i_EnergyAmountToAdd;
+                        wasEnergyAdded = true;
+                    }
+                }
+
+                return wasEnergyAdded;
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
-   
-    
     }
 }

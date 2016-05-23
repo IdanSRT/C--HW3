@@ -23,6 +23,7 @@ namespace Ex03.GarageLogic
         {
             m_LisenceSize = i_LisenceSize;
             m_EngineCapacity = i_EngineCapasity;
+
         }
 
         public int EngineCapacity
