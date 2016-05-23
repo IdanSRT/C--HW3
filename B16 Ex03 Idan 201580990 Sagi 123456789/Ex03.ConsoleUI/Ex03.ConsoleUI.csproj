@@ -35,9 +35,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Ex03GarageLogic">
-      <HintPath>..\Ex03GarageLogic\bin\Debug\Ex03GarageLogic.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
