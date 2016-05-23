@@ -21,14 +21,10 @@ namespace Ex03.GarageLogic
         public string m_LisenseNum;
         public float m_EnergyLeft;
         public List<Wheel> m_WheelsList;
-        public eEnergyType m_EnergyType;
+        public eEnergyType m_EngineEnergyType;
         public float m_MaxEnergy;
 
-        public float MaxEnergy
-        {
-            get { return m_MaxEnergy; }
-            set { m_MaxEnergy = value; }
-        }
+
         
 
         // To Do
@@ -40,7 +36,7 @@ namespace Ex03.GarageLogic
             m_LisenseNum = i_LisenseNum;
             m_EnergyLeft = i_EnergyLeft;
             m_WheelsList = i_WeelsList;
-            m_EnergyType = i_EnergyType;
+            m_EngineEnergyType = i_EnergyType;
             m_MaxEnergy = i_MaxEnergy;
         }
  
@@ -68,20 +64,23 @@ namespace Ex03.GarageLogic
             set { m_WheelsList = value; }
         }
 
-        public virtual eEnergyType EnergyType
+        public virtual eEnergyType EngineEnergyType
         {
-            get { return m_EnergyType; }
-            set { m_EnergyType = value; }
+            get { return m_EngineEnergyType; }
+            set { m_EngineEnergyType = value; }
+        }
+        public float MaxEnergy
+        {
+            get { return m_MaxEnergy; }
+            set { m_MaxEnergy = value; }
         }
 
-        public bool AddEnergy(eEnergyType i_EnergyType, float i_EnergyAmountToAdd)
+        public bool AddEnergy(eEnergyType i_EnergyTypeToAdd, float i_EnergyAmountToAdd)
         {
-            try
-            {
-
+            
                 bool wasEnergyAdded = false;
 
-                if (this.EnergyType == i_EnergyType)
+                if (this.EngineEnergyType == i_EnergyTypeToAdd)
                 {
                     float totalAmount = this.EnergyLeft + i_EnergyAmountToAdd;
                     if (totalAmount <= this.m_MaxEnergy)
@@ -89,14 +88,20 @@ namespace Ex03.GarageLogic
                         this.EnergyLeft += i_EnergyAmountToAdd;
                         wasEnergyAdded = true;
                     }
+                    else
+                    {
+                        Exception valueOutOfRangeException = new Exception();
+                        throw new ValueOutOfRangeException(valueOutOfRangeException, 0, this.MaxEnergy);
+                    }
+                }
+                else
+                {
+                    Exception ex = new Exception();
+                    throw new EnergyDoesNotMatchToEngine(ex, i_EnergyTypeToAdd, this.EngineEnergyType);
                 }
 
                 return wasEnergyAdded;
-            }
-            catch (Exception ex)
-            {
 
-            }
         }
     }
 }
