@@ -31,22 +31,24 @@ namespace Ex03.GarageLogic
             set { m_AirPressure = value; }
         }
 
-        public float MaPossiblePressure
+        public float MaxPossiblePressure
         {
             get { return m_MaxPssiblePressure; }
             set { m_MaxPssiblePressure = value; }
         }
 
-        public bool AddAir(float airPressureToAdd)
+        // Throws ValueOutOfRangeException
+        public void AddAir(float airPressureToAdd)
         {
-            bool isPossibleToAdd = false;
-            float newAirPressure = this.AirPressure + airPressureToAdd;
-            if (newAirPressure <= this.m_MaxPssiblePressure)
+            float newAirPressure = this.AirPressure + airPressureToAdd; // This can throw a null exception;
+            if (airPressureToAdd > 0 && newAirPressure <= this.m_MaxPssiblePressure)
             {
                 this.AirPressure = this.AirPressure + airPressureToAdd;
-                isPossibleToAdd = true;
             }
-            return isPossibleToAdd;
-        }
+            else
+            {
+                throw new ValueOutOfRangeException(new Exception(), 0, this.MaxPossiblePressure, "The air pressure exceeds the range of {0} and {1}");
+            }
+         }
     }
 }

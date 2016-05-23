@@ -25,15 +25,17 @@ namespace Ex03.GarageLogic
             eEnergyType i_FuleType,
             float i_MaxEnergy,
             eColor i_Color,
-            int i_NumOfDoors): base(i_ModelName,
-            i_LisenseNum,
-            i_EnergyLeft,
-            i_WeelsList,
-            i_FuleType,
-            i_MaxEnergy)
-        {
-            m_Color = i_Color;
-            m_NumOfDoors = i_NumOfDoors;
+            int i_NumOfDoors): base(i_ModelName, i_LisenseNum, i_EnergyLeft, i_WeelsList, i_FuleType, i_MaxEnergy){
+            if (i_NumOfDoors > 5 || i_NumOfDoors < 2)
+                {
+                    string message = "A Car can't have less then {0} or more then {1} doors";
+                    throw new ValueOutOfRangeException(new Exception(), 2, 5, message);
+                }
+            else
+                {
+                    m_Color = i_Color;
+                    m_NumOfDoors = i_NumOfDoors;
+                }
         }
 
         public int NumOfDoors
