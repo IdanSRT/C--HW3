@@ -19,6 +19,7 @@ namespace Ex03.GarageLogic
             m_MaxPssiblePressure = i_MaxPossiblePressure;
         }
 
+
         public string Manufacture
         {
             get { return m_Manufacture;}

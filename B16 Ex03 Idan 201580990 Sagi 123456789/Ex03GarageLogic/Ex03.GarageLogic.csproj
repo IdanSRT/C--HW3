@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Car.cs" />
+    <Compile Include="CarFactory.cs" />
     <Compile Include="ElectricVehicle.cs" />
     <Compile Include="EnergyDoesNotMatchToEngine.cs" />
     <Compile Include="Motorcycle.cs" />
