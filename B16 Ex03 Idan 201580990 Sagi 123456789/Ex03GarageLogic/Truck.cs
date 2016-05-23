@@ -11,8 +11,14 @@ namespace Ex03.GarageLogic
         public bool m_HasDangerouseMaterial;
         public float m_MaxWeight;
 
-        public Truck(string i_ModelName, string i_LisenseNum, float i_EnergyLeft, 
-            List<Wheel> i_WeelsList, eEnergyType i_FuleType, float i_MaxEnergy, bool i_HasDangerouseMaterial, float i_MaxWeight )
+        public Truck(string i_ModelName,
+            string i_LisenseNum,
+            float i_EnergyLeft, 
+            List<Wheel> i_WeelsList,
+            eEnergyType i_FuleType,
+            float i_MaxEnergy,
+            bool i_HasDangerouseMaterial,
+            float i_MaxWeight )
             : base(i_ModelName, i_LisenseNum, i_EnergyLeft, i_WeelsList, i_FuleType, i_MaxEnergy)
         {
             m_HasDangerouseMaterial = i_HasDangerouseMaterial;
@@ -24,7 +30,6 @@ namespace Ex03.GarageLogic
             set { float m_MaxWeight = value; }
         }
         
-
         public bool HasDangerouse
         {
             get { return m_HasDangerouseMaterial; }
