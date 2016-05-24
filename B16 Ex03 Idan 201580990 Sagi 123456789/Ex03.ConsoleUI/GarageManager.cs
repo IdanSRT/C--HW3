@@ -22,18 +22,12 @@ namespace Ex03.ConsoleUI
             m_ServiceList = i_ServiceList;
         }
 
-        //add service to the options
-        public void AddService(Service i_ServiceOption)
-        {
-            m_ServiceList.Add(i_ServiceOption);
-        }
-        
         //(1) to add new vehicle to the garage and to check if he allready inside.
         public void AddVehicle(string i_LicenseNumber, string i_VehicleOwnerName, string i_VehicleOwnerPhone, Vehicle i_Vehicle)
         {
-            VehicleStatusInfo newVehicle = new VehicleStatusInfo(i_LicenseNumber, i_VehicleOwnerName, i_LicenseNumber, i_Vehicle);
-            m_VehiclesList.Add(newVehicle);
-            m_NumberOfVehicles++;
+                VehicleStatusInfo newVehicle = new VehicleStatusInfo(i_LicenseNumber, i_VehicleOwnerName, i_LicenseNumber, i_Vehicle);
+                m_VehiclesList.Add(newVehicle);
+                m_NumberOfVehicles++;
         }
         
         //(2) Present list of vehicles in the garage
@@ -59,23 +53,44 @@ namespace Ex03.ConsoleUI
             }
         }
         
-        //(3)updace the vehicle status by the number license with the new status.
+        //(3) updace the vehicle status by the number license with the new status.
         public void UpdateVehicleStatus(String i_LicenseNumber, eVehicleStatus i_VehicleStatus)
         {
             m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].VehicleStatus = i_VehicleStatus;
         }
 
-        //-------(4)Fill air in wheels.
+        //(4) Fill air in wheels.
         public void FillAir(string i_LicenseNumber)
         {
-            m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.GetType();
+            float vehicleWheelMaxAirPressire = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList[1].MaxPossiblePressure;
+             List<Wheel> vehicleWheels = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList;
+            foreach (Wheel wheel in vehicleWheels)
+            {
+                wheel.AddAir(vehicleWheelMaxAirPressire);
+            }
         }
-        
-        //(5)Fill up Fuel tank for motoric vehicle
-        public void FillFuelTank(string i_LicenseNumber)
+      
+        //(5)+(6) Fill up Fuel tank for motoric vehicle and charge battery.
+        public void AddEnergy(string i_LicenseNumber)
         {
-            Vehicle vehicle = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle;
+            float vehicleMaxEnergy = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.MaxEnergy;
+            eEnergyType vehicleEnergyType = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.m_EngineEnergyType;
+            m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.AddEnergy(vehicleEnergyType, vehicleMaxEnergy);
+        }
 
+        //--(7)  Print vehicle information and status
+        public void PrintVehicleInfo(string i_LicenseNumber)
+        {
+            VehicleStatusInfo vehicleStatusInfo = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)];
+            Console.WriteLine("Information and status:");
+            Console.WriteLine("Vehicle license NO." + i_LicenseNumber);
+            Console.WriteLine("Vehicle model :" + vehicleStatusInfo.Vehicle.m_ModelName);
+            Console.WriteLine("Vehicle owner name :" + vehicleStatusInfo.CarOwnerName);
+            Console.WriteLine("Vehicle status in the Garage :" + vehicleStatusInfo.VehicleStatus);
+            Console.WriteLine("Vehicle wheels air pressure :" + vehicleStatusInfo.Vehicle.WheelsList[1].AirPressure);
+            Console.WriteLine("Vehicle wheels manufacturer :" + vehicleStatusInfo.Vehicle.WheelsList[1].Manufacture);
+            Console.WriteLine("Vehicle energy type :" + vehicleStatusInfo.Vehicle.m_EngineEnergyType);
+            Console.WriteLine("Vehicle energy Status :" + vehicleStatusInfo.Vehicle.m_EnergyLeft);
         }
 
         //check if vehical allready in the garage and return its index on the vehicle status list, if not return -1.

@@ -6,24 +6,25 @@ using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI
 {
-    class Service
+    public enum eService
+    {
+        AddVehical,
+        PrintVehicalList,
+        UpdateVehicleStatus,
+        FillAirInWheels,
+        FuelUpTank,
+        ChargeUpBattery,
+        PrintVehicleInfo
+    }
+
+    public class Service
     {
 
         private string m_ServiceString;
         private Enum m_eService;
 
-        public enum eService
-        {
-            AddVehical,
-            PrintVehicalList,
-            UpdateVehicleStatus,
-            FillAirInWheels,
-            FuelUpTank,
-            ChargeUpBattery,
-            PrintVehicleInfo
-        }
-
-        public void Service(string i_ServiceOffered, Enum i_Service)
+        //constructor of object Service
+        public Service(string i_ServiceOffered, Enum i_Service)
         {
             m_ServiceString = i_ServiceOffered;
             m_eService = i_Service;
