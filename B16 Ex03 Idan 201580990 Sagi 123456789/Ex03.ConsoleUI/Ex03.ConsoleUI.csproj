@@ -44,6 +44,9 @@
   <ItemGroup>
     <Compile Include="GarageManager.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Service.cs" />
+    <Compile Include="UIManager.cs" />
+    <Compile Include="UserInterface.cs" />
     <Compile Include="VehicleStatusInfo.cs" />
   </ItemGroup>
   <ItemGroup>

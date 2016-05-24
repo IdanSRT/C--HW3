@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
@@ -19,7 +20,14 @@ namespace Ex03.ConsoleUI
         private String m_LicenseNumber;
         private String m_CarOwnerName;
         private String m_CarOwnerPhone;
+        private Vehicle m_Vehicle;
         private eVehicleStatus m_VehicleStatus;
+
+        public Vehicle Vehicle
+        {
+            get { return Vehicle; }
+            set { Vehicle = value; }
+        }
 
         public eVehicleStatus VehicleStatus
         {
@@ -34,12 +42,13 @@ namespace Ex03.ConsoleUI
         }
 
 
-        public VehicleStatusInfo(String i_CarLicenseNumber,String i_CarOwnerName, String i_CarOwnerPhone)
+        public VehicleStatusInfo(String i_CarLicenseNumber,String i_CarOwnerName, String i_CarOwnerPhone, Vehicle i_Vehicle)
         {
             m_LicenseNumber = i_CarLicenseNumber;
             m_CarOwnerName = i_CarOwnerName;
             m_CarOwnerPhone = i_CarOwnerPhone;
             m_VehicleStatus = eVehicleStatus.InRepair;
+            m_Vehicle = i_Vehicle;
     }
 
         public String CarOwnerName
