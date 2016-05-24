@@ -35,9 +35,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Ex03GarageLogic">
-      <HintPath>..\Ex03GarageLogic\bin\Debug\Ex03GarageLogic.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -47,7 +44,16 @@
   <ItemGroup>
     <Compile Include="GarageManager.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Service.cs" />
+    <Compile Include="UIManager.cs" />
+    <Compile Include="UserInterface.cs" />
     <Compile Include="VehicleStatusInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ex03GarageLogic\Ex03.GarageLogic.csproj">
+      <Project>{9f0d5f7f-81a8-47cb-8df5-72fc7feded2d}</Project>
+      <Name>Ex03.GarageLogic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
