@@ -24,9 +24,6 @@ namespace Ex03.GarageLogic
         public eEnergyType m_EngineEnergyType;
         public float m_MaxEnergy;
 
-
-        
-
         // To Do
         // delete all unnessecary fields in Class Vehicle 
         public Vehicle
