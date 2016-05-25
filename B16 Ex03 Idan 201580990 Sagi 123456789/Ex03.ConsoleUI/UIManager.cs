@@ -21,6 +21,7 @@ namespace Ex03.ConsoleUI
 
         public static void StartService()
         {
+            //setting the garage with is services.
             GarageManager newGarageManager = new GarageManager();
             newGarageManager.ServiceList.Add(new Service(("Enter a new car for repairing in the garage."), eService.AddVehical));
             newGarageManager.ServiceList.Add(new Service(("Print vehicle List in the Garage."), eService.PrintVehicalList));
@@ -29,13 +30,16 @@ namespace Ex03.ConsoleUI
             newGarageManager.ServiceList.Add(new Service(("Fuel up vehicle feul tank."), eService.FuelUpTank));
             newGarageManager.ServiceList.Add(new Service(("Charge up vehicle battery."), eService.ChargeUpBattery));
             newGarageManager.ServiceList.Add(new Service(("Print vehicle full info and status."), eService.PrintVehicleInfo));
-
-            eService serviceOptionChoose = ServiceOptionChoose(newGarageManager.m_ServiceList);
             
+            //user choose the service he wish for.
+            eService serviceOptionChoose = ServiceOptionChoose(newGarageManager.m_ServiceList);           
             switch (serviceOptionChoose)
             {
-                case eService.AddVehical: //1                    
-                    newGarageManager.VehicleList.Add(getNewVehicleStatusInfo());                   
+                case eService.AddVehical: //1 
+                    string VehicleLicenseNum = getNewLicenseNum();    
+                    VehicleStatusInfo newVehicleStatusInfo = CheckOrGetVehicleStatusInfo();
+                    if(newVehicleStatusInfo )
+                    newGarageManager.VehicleList.Add(newVehicleStatusInfo);                   
                     break;
                 case eService.PrintVehicalList:
                     Console.WriteLine("option 2 was picked");
@@ -61,16 +65,30 @@ namespace Ex03.ConsoleUI
                 default:
                     Console.WriteLine("Please choose a valide option from our service");
                     break;
-            }
-           
+            }          
         }
-
-        private void getNewVehicleStatusInfo()
+        //geting the license number from the user.
+        private static string getNewLicenseNum()
         {
-            
+            string licenseNumber = "";
             Console.WriteLine("Enter your vehicle license number");
             string inputLicenseNumberStr = Console.ReadLine();
-            while (inputLicenseNumberStr == "" )
+            while (inputLicenseNumberStr == "")
+            {
+                Console.WriteLine("Please enter a valide vehicle license number");
+                inputLicenseNumberStr = Console.ReadLine();
+                licenseNumber = inputLicenseNumberStr;
+            }
+            return licenseNumber;
+        }
+
+        //takeing a vehicle license number and check if allready in the garage and returning the status or creating a new vehicleStatusInfo.
+        private VehicleStatusInfo CheckOrGetVehicleStatusInfo()
+        {
+            VehicleStatusInfo newVehicleStatusInfo;
+            Console.WriteLine("Enter your vehicle license number");
+            string inputLicenseNumberStr = Console.ReadLine();
+            while (inputLicenseNumberStr == "")
             {
                 Console.WriteLine("Please enter a valide vehicle license number");
                 inputLicenseNumberStr = Console.ReadLine();
@@ -82,16 +100,17 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine("Vehicle L.N " + inputLicenseNumberStr +
                     " is allready in the garage and his status is " + m_GarageManager.VehicleList[indexOnList].VehicleStatus);
+                newVehicleStatusInfo = null;
             }
             //vehicle isnt in the garage and we start taking information for the new vehicle.
             else
             {
-                AddNewVehicle(inputLicenseNumberStr);               
+                newVehicleStatusInfo = GetNewVehicleStatusInfo(inputLicenseNumberStr);               
             }
-           
+            return newVehicleStatusInfo;
         }
 
-        private void AddNewVehicle(string i_LicenseNumber)
+        private VehicleStatusInfo GetNewVehicleStatusInfo(string i_LicenseNumber)
         {
             eVehicleType vehicleType = GetVehicleType();
             string vehicleOwnerName = GetVehicleOwnerName();
@@ -104,7 +123,9 @@ namespace Ex03.ConsoleUI
             List<Wheel> wheelList = GetWheelList();
             Vehicle newVehicle = new Vehicle(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy);
             VehicleStatusInfo newVehicleStatusInfo = new VehicleStatusInfo(i_LicenseNumber, vehicleOwnerName, vehicleOwnerPhone, newVehicle);
-            AdditionalInfo(vehicleType, newVehicle);        
+            AdditionalInfo(vehicleType, newVehicle);
+
+            return newVehicleStatusInfo;        
         }
 
         private void AdditionalInfo(eVehicleType vehicleType, Vehicle newVehicle)

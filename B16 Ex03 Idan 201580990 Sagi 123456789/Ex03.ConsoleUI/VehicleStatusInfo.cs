@@ -49,7 +49,6 @@ namespace Ex03.ConsoleUI
             set { m_LicenseNumber = value; }
         }
 
-
         public VehicleStatusInfo(String i_VehicleLicenseNumber,String i_VehicleOwnerName, String i_VehicleOwnerPhone, Vehicle i_Vehicle)
         {
             m_LicenseNumber = i_VehicleLicenseNumber;
@@ -59,6 +58,32 @@ namespace Ex03.ConsoleUI
             m_Vehicle = i_Vehicle;
     }
 
+        public VehicleStatusInfo(String i_VehicleLicenseNumber, String i_VehicleOwnerName, String i_VehicleOwnerPhone, Truck i_Vehicle)
+        {
+            m_LicenseNumber = i_VehicleLicenseNumber;
+            m_VehicleOwnerName = i_VehicleOwnerName;
+            m_VehicleOwnerPhone = i_VehicleOwnerPhone;
+            m_VehicleStatus = eVehicleStatus.InRepair;
+            m_Vehicle = i_Vehicle;
+        }
+
+        public VehicleStatusInfo(String i_VehicleLicenseNumber, String i_VehicleOwnerName, String i_VehicleOwnerPhone, Car i_Vehicle)
+        {
+            m_LicenseNumber = i_VehicleLicenseNumber;
+            m_VehicleOwnerName = i_VehicleOwnerName;
+            m_VehicleOwnerPhone = i_VehicleOwnerPhone;
+            m_VehicleStatus = eVehicleStatus.InRepair;
+            m_Vehicle = i_Vehicle;
+        }
+
+        public VehicleStatusInfo(String i_VehicleLicenseNumber, String i_VehicleOwnerName, String i_VehicleOwnerPhone, Motorcycle i_Vehicle)
+        {
+            m_LicenseNumber = i_VehicleLicenseNumber;
+            m_VehicleOwnerName = i_VehicleOwnerName;
+            m_VehicleOwnerPhone = i_VehicleOwnerPhone;
+            m_VehicleStatus = eVehicleStatus.InRepair;
+            m_Vehicle = i_Vehicle.;
+        }
         public String VehicleOwnerName
         {
             get { return m_VehicleOwnerName; }
