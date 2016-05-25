@@ -12,7 +12,17 @@ namespace Ex03.GarageLogic
         Octan95,
         Octan96,
         Octan98,
-        Electricity
+        Electricity,
+        DeFault
+    }
+    public enum eVehicleType
+    {
+        MotoricCar,
+        ElectricCar,
+        MotoricBike,
+        ElecticBike,
+        Truck,
+        Else
     }
 
     public class Vehicle

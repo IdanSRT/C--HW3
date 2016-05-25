@@ -99,7 +99,7 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("Information and status:");
             Console.WriteLine("Vehicle license NO." + i_LicenseNumber);
             Console.WriteLine("Vehicle model :" + vehicleStatusInfo.Vehicle.m_ModelName);
-            Console.WriteLine("Vehicle owner name :" + vehicleStatusInfo.CarOwnerName);
+            Console.WriteLine("Vehicle owner name :" + vehicleStatusInfo.VehicleOwnerName);
             Console.WriteLine("Vehicle status in the Garage :" + vehicleStatusInfo.VehicleStatus);
             Console.WriteLine("Vehicle wheels air pressure :" + vehicleStatusInfo.Vehicle.WheelsList[1].AirPressure);
             Console.WriteLine("Vehicle wheels manufacturer :" + vehicleStatusInfo.Vehicle.WheelsList[1].Manufacture);

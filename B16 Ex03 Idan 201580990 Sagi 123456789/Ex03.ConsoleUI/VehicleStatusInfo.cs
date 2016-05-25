@@ -18,8 +18,8 @@ namespace Ex03.ConsoleUI
     {
         
         private String m_LicenseNumber;
-        private String m_CarOwnerName;
-        private String m_CarOwnerPhone;
+        private String m_VehicleOwnerName;
+        private String m_VheicleOwnerPhone;
         private Vehicle m_Vehicle;
         private eVehicleStatus m_VehicleStatus;
 
@@ -42,25 +42,25 @@ namespace Ex03.ConsoleUI
         }
 
 
-        public VehicleStatusInfo(String i_CarLicenseNumber,String i_CarOwnerName, String i_CarOwnerPhone, Vehicle i_Vehicle)
+        public VehicleStatusInfo(String i_VehicleLicenseNumber,String i_VehicleOwnerName, String i_VehicleOwnerPhone, Vehicle i_Vehicle)
         {
-            m_LicenseNumber = i_CarLicenseNumber;
-            m_CarOwnerName = i_CarOwnerName;
-            m_CarOwnerPhone = i_CarOwnerPhone;
+            m_LicenseNumber = i_VehicleLicenseNumber;
+            m_VehicleOwnerName = i_VehicleOwnerName;
+            m_VehicleOwnerPhone = i_VehicleOwnerPhone;
             m_VehicleStatus = eVehicleStatus.InRepair;
             m_Vehicle = i_Vehicle;
     }
 
-        public String CarOwnerName
+        public String VehicleOwnerName
         {
-            get { return m_CarOwnerName; }
-            set { m_CarOwnerName = value; }
+            get { return m_VehicleOwnerName; }
+            set { m_VehicleOwnerName = value; }
         }
 
-        public String CarOwnerPhone
+        public String VehicleOwnerPhone
         {
-            get { return m_CarOwnerPhone; }
-            set { m_CarOwnerPhone = value; }
+            get { return m_VehicleOwnerPhone; }
+            set { m_VehicleOwnerPhone = value; }
         }
     }
 }

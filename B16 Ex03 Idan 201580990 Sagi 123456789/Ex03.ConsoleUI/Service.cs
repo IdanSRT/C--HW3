@@ -14,7 +14,8 @@ namespace Ex03.ConsoleUI
         FillAirInWheels,
         FuelUpTank,
         ChargeUpBattery,
-        PrintVehicleInfo
+        PrintVehicleInfo,
+        Done
     }
 
     public class Service
