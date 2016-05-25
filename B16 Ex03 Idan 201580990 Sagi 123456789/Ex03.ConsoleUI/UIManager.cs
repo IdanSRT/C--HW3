@@ -34,9 +34,8 @@ namespace Ex03.ConsoleUI
             
             switch (serviceOptionChoose)
             {
-                case eService.AddVehical:
-                    Console.WriteLine("option 1 was picked");
-                    newGarageManager.AddVehicleUI();                   
+                case eService.AddVehical: //1                    
+                    newGarageManager.VehicleList.Add(getNewVehicleStatusInfo());                   
                     break;
                 case eService.PrintVehicalList:
                     Console.WriteLine("option 2 was picked");
@@ -66,7 +65,7 @@ namespace Ex03.ConsoleUI
            
         }
 
-        private void AddVehicleUI()
+        private void getNewVehicleStatusInfo()
         {
             
             Console.WriteLine("Enter your vehicle license number");
@@ -110,7 +109,7 @@ namespace Ex03.ConsoleUI
 
         private void AdditionalInfo(eVehicleType vehicleType, Vehicle newVehicle)
         {
-            throw new NotImplementedException();
+            
         }
 
         //geting vehicle model name from the user.
@@ -253,6 +252,7 @@ namespace Ex03.ConsoleUI
             return newEnergyType;
         }
 
+        //UI for choosing one of the option in the serice enum list.
         public static eService ServiceOptionChoose(List<Service> i_ServiceList)
         {
             Console.WriteLine("Hello dear custumer and thanks for coming to our humble garage. \nPlease choose one of the following options:");

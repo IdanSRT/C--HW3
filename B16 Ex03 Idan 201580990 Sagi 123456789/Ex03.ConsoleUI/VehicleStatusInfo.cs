@@ -19,9 +19,17 @@ namespace Ex03.ConsoleUI
         
         private String m_LicenseNumber;
         private String m_VehicleOwnerName;
-        private String m_VheicleOwnerPhone;
+        private String m_VehicleOwnerPhone;
         private Vehicle m_Vehicle;
         private eVehicleStatus m_VehicleStatus;
+        private eVehicleType m_VehicleType;
+
+        public eVehicleType vehicleType
+        {
+            get { return m_VehicleType; }
+            set { m_VehicleType = value; }
+        }
+
 
         public Vehicle Vehicle
         {
