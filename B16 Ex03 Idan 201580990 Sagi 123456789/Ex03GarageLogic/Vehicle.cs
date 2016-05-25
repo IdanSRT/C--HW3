@@ -82,33 +82,26 @@ namespace Ex03.GarageLogic
             set { m_MaxEnergy = value; }
         }
 
-        public bool AddEnergy(eEnergyType i_EnergyTypeToAdd, float i_EnergyAmountToAdd)
+        public void  AddEnergy(eEnergyType i_EnergyTypeToAdd, float i_EnergyAmountToAdd)
         {
-            
-                bool wasEnergyAdded = false;
-
-                if (this.EngineEnergyType == i_EnergyTypeToAdd)
+            if (this.EngineEnergyType == i_EnergyTypeToAdd)
+            {
+                float totalAmount = this.EnergyLeft + i_EnergyAmountToAdd;
+                if (totalAmount <= this.m_MaxEnergy)
                 {
-                    float totalAmount = this.EnergyLeft + i_EnergyAmountToAdd;
-                    if (totalAmount <= this.m_MaxEnergy)
-                    {
-                        this.EnergyLeft += i_EnergyAmountToAdd;
-                        wasEnergyAdded = true;
-                    }
-                    else
-                    {
-                        Exception valueOutOfRangeException = new Exception();
-                        throw new ValueOutOfRangeException(valueOutOfRangeException, 0, this.MaxEnergy);
-                    }
+                    this.EnergyLeft += i_EnergyAmountToAdd;
                 }
                 else
                 {
-                    Exception ex = new Exception();
-                    throw new EnergyDoesNotMatchToEngine(ex, i_EnergyTypeToAdd, this.EngineEnergyType);
+                    Exception valueOutOfRangeException = new Exception();
+                    throw new ValueOutOfRangeException(valueOutOfRangeException, 0, this.MaxEnergy);
                 }
-
-                return wasEnergyAdded;
-
+            }
+            else
+            {
+                Exception ex = new Exception();
+                throw new EnergyDoesNotMatchToEngine(ex, i_EnergyTypeToAdd, this.EngineEnergyType);
+            }
         }
     }
 }
