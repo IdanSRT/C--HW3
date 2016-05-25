@@ -13,6 +13,20 @@ namespace Ex03.ConsoleUI
         private List<VehicleStatusInfo> m_VehiclesList;
         private int m_NumberOfVehicles;
         public List<Service> m_ServiceList;
+        
+        //set/get method to the service list field
+        public List<Service> ServiceList
+        {
+            get { return m_ServiceList; }
+            set { m_ServiceList = value; }
+        }
+
+        //set/get method to the vehicle list field
+        public List<VehicleStatusInfo> VehicleList
+        {
+            get { return m_VehiclesList; }
+            set { m_VehiclesList = value; }
+        }
 
         //constructor
         public void GarageManger(List<Service> i_ServiceList)
@@ -107,6 +121,5 @@ namespace Ex03.ConsoleUI
             return VehicleIndexOnList;
         }
 
-        
     }
 }
