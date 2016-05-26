@@ -28,13 +28,28 @@ namespace Ex03.ConsoleUI
             set { m_VehiclesList = value; }
         }
 
-        //constructor
-        public void GarageManger(List<Service> i_ServiceList)
+        //constructor default.
+        public GarageManager()
+        {
+            m_VehiclesList = new List<VehicleStatusInfo>();
+            m_NumberOfVehicles = 0;
+            m_ServiceList.Add(new Service(("Enter a new car for repairing in the garage."), eService.AddVehical));
+            m_ServiceList.Add(new Service(("Print vehicle List in the Garage."), eService.PrintVehicalList));
+            m_ServiceList.Add(new Service(("Update vehicle status in the garage."), eService.UpdateVehicleStatus));
+            m_ServiceList.Add(new Service(("Fill air in the Vehicle wheels."), eService.FillAirInWheels));
+            m_ServiceList.Add(new Service(("Fuel up vehicle feul tank."), eService.FuelUpTank));
+            m_ServiceList.Add(new Service(("Charge up vehicle battery."), eService.ChargeUpBattery));
+            m_ServiceList.Add(new Service(("Print vehicle full info and status."), eService.PrintVehicleInfo));
+        }
+        
+        //constuctor with custome services
+        public  GarageManager(List<Service> i_ServiceList)
         {
             m_VehiclesList = new List<VehicleStatusInfo>();
             m_NumberOfVehicles = 0;
             m_ServiceList = i_ServiceList;
         }
+
 
         //(1) to add new vehicle to the garage and to check if he allready inside.
         public void AddVehicle(string i_LicenseNumber, string i_VehicleOwnerName, string i_VehicleOwnerPhone, Vehicle i_Vehicle)
@@ -123,7 +138,8 @@ namespace Ex03.ConsoleUI
             }
             return VehicleIndexOnList;
         }
-
+        
+        //Helper for printing
         public static void WriteLine<T>(T obj)
         {
             var t = typeof(T);
@@ -136,5 +152,6 @@ namespace Ex03.ConsoleUI
             sb.AppendLine();
             Console.WriteLine(sb.ToString());
         }
+        
     }
 }

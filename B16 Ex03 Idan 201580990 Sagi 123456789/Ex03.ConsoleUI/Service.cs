@@ -42,8 +42,5 @@ namespace Ex03.ConsoleUI
             get { return m_eService; }
             set { m_eService = value; }
         }
-
-        
-
     }
 }

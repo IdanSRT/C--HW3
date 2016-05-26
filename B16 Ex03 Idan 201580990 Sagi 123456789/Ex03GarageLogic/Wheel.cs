@@ -48,7 +48,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw new ValueOutOfRangeException(new Exception(), 0, this.MaxPossiblePressure, "The air pressure exceeds the range of {0} and {1}");
+                throw new ValueOutOfRangeException(new Exception(), 0, this.MaxPossiblePressure);
             }
          }
     }

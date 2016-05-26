@@ -20,26 +20,16 @@ namespace Ex03.ConsoleUI
         private GarageManager m_GarageManager;
 
         //constractor for UIManager.
-        public UIManager(GarageManager i_GarageManager)
+        public UIManager()
         {
-            m_GarageManager = i_GarageManager;
+            m_GarageManager = new GarageManager();
         }
 
         public void StartService()
         {
-
-            //setting the garage with is services.
             GarageManager newGarageManager = this.m_GarageManager;
-            newGarageManager.ServiceList.Add(new Service(("Enter a new car for repairing in the garage."), eService.AddVehical));
-            newGarageManager.ServiceList.Add(new Service(("Print vehicle List in the Garage."), eService.PrintVehicalList));
-            newGarageManager.ServiceList.Add(new Service(("Update vehicle status in the garage."), eService.UpdateVehicleStatus));
-            newGarageManager.ServiceList.Add(new Service(("Fill air in the Vehicle wheels."), eService.FillAirInWheels));
-            newGarageManager.ServiceList.Add(new Service(("Fuel up vehicle feul tank."), eService.FuelUpTank));
-            newGarageManager.ServiceList.Add(new Service(("Charge up vehicle battery."), eService.ChargeUpBattery));
-            newGarageManager.ServiceList.Add(new Service(("Print vehicle full info and status."), eService.PrintVehicleInfo));
-
             bool isDone = false;
-            while (!isDone)
+            while (isDone == false)
             {
                 //user choose the service he wish for.
                 eService serviceOptionChoose = ServiceOptionChoose(newGarageManager.m_ServiceList);
