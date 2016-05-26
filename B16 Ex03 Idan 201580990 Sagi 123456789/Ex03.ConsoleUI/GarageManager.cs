@@ -105,9 +105,10 @@ namespace Ex03.ConsoleUI
         //(5)+(6) Fill up Fuel tank for motoric vehicle and charge battery.
         public void AddEnergy(string i_LicenseNumber)
         {
-            float vehicleMaxEnergy = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.MaxEnergy;
-            eEnergyType vehicleEnergyType = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.m_EngineEnergyType;
-            m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.AddEnergy(vehicleEnergyType, vehicleMaxEnergy);
+            Vehicle currVehicle = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle;
+            eEnergyType vehicleEnergyType = currVehicle.m_EngineEnergyType;
+            float vehicleEnergyToAdd= currVehicle.EnergyLeft - currVehicle.MaxEnergy;
+            currVehicle.AddEnergy(vehicleEnergyType, vehicleEnergyToAdd);
         }
 
         //--(7)  Print vehicle information and status
