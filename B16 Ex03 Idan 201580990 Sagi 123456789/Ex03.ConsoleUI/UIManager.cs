@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Ex03.GarageLogic;
 
-
 namespace Ex03.ConsoleUI
 {
     public enum eStatus
@@ -31,11 +30,11 @@ namespace Ex03.ConsoleUI
             bool isDone = false;
             while (isDone == false)
             {
-                //user choose the service he wish for.
+                // User choose the service he wish for.
                 eService serviceOptionChoose = ServiceOptionChoose(newGarageManager.m_ServiceList);
                 switch (serviceOptionChoose)
                 {
-                    case eService.AddVehical: //1 
+                    case eService.AddVehical: // 1 
                         string VehicleLicenseNum = getNewLicenseNum();
                         int indexOnList = newGarageManager.IndexOfVehicle(VehicleLicenseNum);
                         if (indexOnList != -1)
@@ -47,6 +46,7 @@ namespace Ex03.ConsoleUI
                         {
                             newGarageManager.VehicleList.Add(GetNewVehicleStatusInfo(VehicleLicenseNum));
                         }
+
                         break;
                     case eService.PrintVehicalList:
                         PrintVehicleList(newGarageManager);
@@ -76,6 +76,7 @@ namespace Ex03.ConsoleUI
                 }
             }
         }
+
         // Printing vehicle info
         private static void PrintVehicleInfo(GarageManager i_GarageManager)
         {
@@ -117,14 +118,15 @@ namespace Ex03.ConsoleUI
                         i_GarageManager.UpdateVehicleStatus(VehicleLicenseNum, eVehicleStatus.Piad);
                         break;
                     default:
-                        //do nothing , open for future options.
+
+                        // Do nothing , open for future options.
                         break;
                 }
             }
         }
 
         // Helper for printing vehicle list.
-        private  static void PrintVehicleList(GarageManager i_GarageManager)
+        private static void PrintVehicleList(GarageManager i_GarageManager)
         {
             Console.WriteLine("choose what vehicle list you wish to print:\n" +
                          "(1)In repair  " + "(2)Repaired  " + "(3)Payed  " + "(4)All-not filterd  ");
@@ -149,10 +151,10 @@ namespace Ex03.ConsoleUI
         // Geting the license number from the user.
         private static string getNewLicenseNum()
         {
-            string licenseNumber = "";
+            string licenseNumber = string.Empty;
             Console.WriteLine("Enter your vehicle license number");
             string inputLicenseNumberStr = Console.ReadLine();
-            while (inputLicenseNumberStr == "")
+            while (inputLicenseNumberStr == string.Empty)
             {
                 Console.WriteLine("Please enter a valide vehicle license number");
                 inputLicenseNumberStr = Console.ReadLine();
@@ -162,7 +164,7 @@ namespace Ex03.ConsoleUI
             return licenseNumber;
         }
 
-        //takeing a vehicle license number and creating a new vehicleStatusInfo.
+        // Takeing a vehicle license number and creating a new vehicleStatusInfo.
         public VehicleStatusInfo GetNewVehicleStatusInfo(string i_LicenseNumber)
         {
             eVehicleType vehicleType = GetVehicleType();
@@ -199,7 +201,7 @@ namespace Ex03.ConsoleUI
                 case eVehicleType.Truck:
                     bool hasDangerouseMaterial = IsDangerouse();
                     float maxWeight = ChooseNumOf("max weight of the truck");
-                    newVehicle = new Truck(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy,hasDangerouseMaterial, maxWeight);
+                    newVehicle = new Truck(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy, hasDangerouseMaterial, maxWeight);
                     break;
                 default:
                     newVehicle = new Vehicle(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy);
@@ -282,7 +284,7 @@ namespace Ex03.ConsoleUI
         // Get car color from the user.
         private eColor GetColor()
         {
-            eColor inputColor= eColor.Other;
+            eColor inputColor = eColor.Other;
             Console.WriteLine("Choose the number of the car color :\n"
                 + "(1)Yello  " + "(2)White  " + "(3)Red  " + "(4)Black  " + "(5)Other  ");
             string inputColorStr = Console.ReadLine();
@@ -304,15 +306,17 @@ namespace Ex03.ConsoleUI
                     inputColor = eColor.Other;
                     break;
             }
+
             return inputColor;
         }
 
         // Geting vehicle model name from the user.
         private string GetVehicleModleName()
         {
-            string inputModelName = "";
+            string inputModelName = string.Empty;
+
             // Check if its not empty vehicle model name string
-            while (inputModelName == "")
+            while (inputModelName == string.Empty)
             {
                 Console.WriteLine("Please type the vehicle owner name");
                 inputModelName = Console.ReadLine();
@@ -321,13 +325,14 @@ namespace Ex03.ConsoleUI
             return inputModelName;
         }
         
-        //Geting vehicle owner phone number from the user.
+        // Geting vehicle owner phone number from the user.
         private string GetVehicleOwnerPhone()
         {
-            string inputVehicleOwnerPhoneStr = "";
+            string inputVehicleOwnerPhoneStr = string.Empty;
             bool goodInputPhone = false;
+
             // Check if its not empty string or not a number under the thought that there isnot '-' or ' ' in the string
-            while (inputVehicleOwnerPhoneStr == "" && !goodInputPhone)
+            while (inputVehicleOwnerPhoneStr == string.Empty && !goodInputPhone)
             {
                 Console.WriteLine("Please type the vehicle owner phone number");
                 inputVehicleOwnerPhoneStr = Console.ReadLine();
@@ -341,9 +346,10 @@ namespace Ex03.ConsoleUI
         // Geting vehicle owner name for the user.
         private string GetVehicleOwnerName()
         {
-            string inputVehicleOwnerNameStr = "";
+            string inputVehicleOwnerNameStr = string.Empty;
+
             // Check if its not empty name string
-            while (inputVehicleOwnerNameStr == "")
+            while (inputVehicleOwnerNameStr == string.Empty)
             {
                 Console.WriteLine("Please type the vehicle owner name");
                 inputVehicleOwnerNameStr = Console.ReadLine();
@@ -356,7 +362,7 @@ namespace Ex03.ConsoleUI
         private eVehicleType GetVehicleType()
         {
             eVehicleType newVehicleType;
-            string inputVehicleType = "";
+            string inputVehicleType = string.Empty;
             Console.WriteLine("Choose the number of the vehicle type :");
             int counter = 1;
             foreach (eVehicleType vehicleType in eVehicleType.GetValues(typeof(eVehicleType)))
@@ -381,7 +387,7 @@ namespace Ex03.ConsoleUI
                 case "5":
                     newVehicleType = eVehicleType.Truck;
                     break;
-                default: //in case of new type of vehicle which still not implemented.
+                default: // In case of new type of vehicle which still not implemented.
                     newVehicleType = eVehicleType.Else;
                     break;
             }
@@ -400,13 +406,13 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine("Wheel No." + (numOfWheel + 1) + " :");
 
                 float inputMaxPossiblePressure;
-                string inputWheelManufacture = "";
+                string inputWheelManufacture = string.Empty;
                 float inputAirPressure;
 
                 inputMaxPossiblePressure = ChooseNumOf("max possible air pressoure in wheel (float)");
 
-                //check if its not empty  wheel manufacture name string                   
-                while (inputWheelManufacture == "")
+                // Check if its not empty  wheel manufacture name string                   
+                while (inputWheelManufacture == string.Empty)
                 {
                     Console.WriteLine("Please type the wheel No." + numOfWheel + " manufacture name");
                     inputWheelManufacture = Console.ReadLine();
@@ -446,7 +452,7 @@ namespace Ex03.ConsoleUI
                 case "Soler":
                     newEnergyType = eEnergyType.Soler;
                     break;
-                default: //in case of new type of energy which still not implemented.
+                default: // In case of new type of energy which still not implemented.
                     newEnergyType = eEnergyType.DeFault;
                     break;
             }
