@@ -1,11 +1,9 @@
-
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ex03.GarageLogic;
-
 
 namespace Ex03.ConsoleUI
 {
@@ -16,7 +14,7 @@ namespace Ex03.ConsoleUI
         Piad
     }
 
-    class UIManager
+    public class UIManager
     {
         private GarageManager m_GarageManager;
 
@@ -32,11 +30,11 @@ namespace Ex03.ConsoleUI
             bool isDone = false;
             while (isDone == false)
             {
-                //user choose the service he wish for.
+                // User choose the service he wish for.
                 eService serviceOptionChoose = ServiceOptionChoose(newGarageManager.m_ServiceList);
                 switch (serviceOptionChoose)
                 {
-                    case eService.AddVehical: //1 
+                    case eService.AddVehical: // 1 
                         string VehicleLicenseNum = getNewLicenseNum();
                         int indexOnList = newGarageManager.IndexOfVehicle(VehicleLicenseNum);
                         if (indexOnList != -1)
@@ -48,6 +46,7 @@ namespace Ex03.ConsoleUI
                         {
                             newGarageManager.VehicleList.Add(GetNewVehicleStatusInfo(VehicleLicenseNum));
                         }
+
                         break;
                     case eService.PrintVehicalList:
                         PrintVehicleList(newGarageManager);
@@ -77,6 +76,7 @@ namespace Ex03.ConsoleUI
                 }
             }
         }
+
         // Printing vehicle info
         private static void PrintVehicleInfo(GarageManager i_GarageManager)
         {
@@ -90,8 +90,6 @@ namespace Ex03.ConsoleUI
             {
                 i_GarageManager.PrintVehicleInfo(VehicleLicenseNum);
             }
-            
-            
         }
 
         // Update the vehicle Status;
@@ -120,14 +118,15 @@ namespace Ex03.ConsoleUI
                         i_GarageManager.UpdateVehicleStatus(VehicleLicenseNum, eVehicleStatus.Piad);
                         break;
                     default:
-                        //do nothing , open for future options.
+
+                        // Do nothing , open for future options.
                         break;
                 }
             }
         }
 
         // Helper for printing vehicle list.
-        private  static void PrintVehicleList(GarageManager i_GarageManager)
+        private static void PrintVehicleList(GarageManager i_GarageManager)
         {
             Console.WriteLine("choose what vehicle list you wish to print:\n" +
                          "(1)In repair  " + "(2)Repaired  " + "(3)Payed  " + "(4)All-not filterd  ");
@@ -152,15 +151,16 @@ namespace Ex03.ConsoleUI
         // Geting the license number from the user.
         private static string getNewLicenseNum()
         {
-            string licenseNumber = "";
+            string licenseNumber = string.Empty;
             Console.WriteLine("Enter your vehicle license number");
             string inputLicenseNumberStr = Console.ReadLine();
-            while (inputLicenseNumberStr == "")
+            while (inputLicenseNumberStr == string.Empty)
             {
                 Console.WriteLine("Please enter a valide vehicle license number");
                 inputLicenseNumberStr = Console.ReadLine();
                 licenseNumber = inputLicenseNumberStr;
             }
+
             return licenseNumber;
         }
 
@@ -171,10 +171,10 @@ namespace Ex03.ConsoleUI
             string vehicleOwnerName = GetVehicleOwnerName();
             string vehicleOwnerPhone = GetVehicleOwnerPhone();
             string modelName = GetVehicleModleName();
-            eEnergyType energyType = getEnergyInput(vehicleType);
-            float maxEnergy = GetMaxEnergy(vehicleType);
+            eEnergyType energyType = getEnergyInput();
+            float maxEnergy = GetMaxEnergy;
             float energyLeft = ChooseNumOf("energy Left in the vehicle (float)", 0, maxEnergy);
-            List<Wheel> wheelList = GetWheelList(vehicleType);
+            List<Wheel> wheelList = GetWheelList();
             Vehicle newVehicle;
             switch (vehicleType)
             {
@@ -201,42 +201,15 @@ namespace Ex03.ConsoleUI
                 case eVehicleType.Truck:
                     bool hasDangerouseMaterial = IsDangerouse();
                     float maxWeight = ChooseNumOf("max weight of the truck");
-                    newVehicle = new Truck(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy,hasDangerouseMaterial, maxWeight);
+                    newVehicle = new Truck(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy, hasDangerouseMaterial, maxWeight);
                     break;
                 default:
                     newVehicle = new Vehicle(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy);
                     break;
             }
+
             VehicleStatusInfo newVehicleStatusInfo = new VehicleStatusInfo(i_LicenseNumber, vehicleOwnerName, vehicleOwnerPhone, newVehicle);
             return newVehicleStatusInfo;
-        }
-
-        // Auto choose max energy.
-        private float GetMaxEnergy(eVehicleType i_VehicleType)
-        {
-            float maxEnergy;
-            switch (i_VehicleType)
-            {
-                case eVehicleType.MotoricBike:
-                    maxEnergy = 7.2F;
-                    break;
-                case eVehicleType.ElecticBike:
-                    maxEnergy = 1.9F;
-                    break;
-                case eVehicleType.MotoricCar:
-                    maxEnergy = 38F;
-                    break;
-                case eVehicleType.ElectricCar:
-                    maxEnergy = 3.3F;
-                    break;
-                case eVehicleType.Truck:
-                    maxEnergy = 135F;
-                    break;
-                default:
-                    maxEnergy = ChooseNumOf("maximum fuel/ battery time");
-                    break;
-            }
-            return maxEnergy;
         }
 
         // Check with the user if the truck is dangerouse.
@@ -261,6 +234,7 @@ namespace Ex03.ConsoleUI
                     Console.WriteLine("Please type 'Y' or 'N' , its dangerouse !");
                 }
             }
+
             return IsDangerouse;
         }
 
@@ -296,6 +270,7 @@ namespace Ex03.ConsoleUI
                     licenseSize = eLisenceSize.Other;
                     break;
             }
+
             return licenseSize;
         }
 
@@ -309,7 +284,7 @@ namespace Ex03.ConsoleUI
         // Get car color from the user.
         private eColor GetColor()
         {
-            eColor inputColor= eColor.Other;
+            eColor inputColor = eColor.Other;
             Console.WriteLine("Choose the number of the car color :\n"
                 + "(1)Yello  " + "(2)White  " + "(3)Red  " + "(4)Black  " + "(5)Other  ");
             string inputColorStr = Console.ReadLine();
@@ -331,48 +306,55 @@ namespace Ex03.ConsoleUI
                     inputColor = eColor.Other;
                     break;
             }
+
             return inputColor;
         }
 
         // Geting vehicle model name from the user.
         private string GetVehicleModleName()
         {
-            string inputModelName = "";
-            //check if its not empty vehicle model name string
-            while (inputModelName == "")
+            string inputModelName = string.Empty;
+
+            // Check if its not empty vehicle model name string
+            while (inputModelName == string.Empty)
             {
-                Console.WriteLine("Please type the vehicle model name");
+                Console.WriteLine("Please type the vehicle owner name");
                 inputModelName = Console.ReadLine();
             }
+
             return inputModelName;
         }
         
         // Geting vehicle owner phone number from the user.
         private string GetVehicleOwnerPhone()
         {
-            string inputVehicleOwnerPhoneStr = "";
+            string inputVehicleOwnerPhoneStr = string.Empty;
             bool goodInputPhone = false;
-            //check if its not empty string or not a number under the thought that there isnot '-' or ' ' in the string
-            while (inputVehicleOwnerPhoneStr == "" && !goodInputPhone)
+
+            // Check if its not empty string or not a number under the thought that there isnot '-' or ' ' in the string
+            while (inputVehicleOwnerPhoneStr == string.Empty && !goodInputPhone)
             {
                 Console.WriteLine("Please type the vehicle owner phone number");
                 inputVehicleOwnerPhoneStr = Console.ReadLine();
                 int inputNumInt;
                 goodInputPhone = int.TryParse(inputVehicleOwnerPhoneStr, out inputNumInt);
             }
+
             return inputVehicleOwnerPhoneStr;
         }
 
         // Geting vehicle owner name for the user.
         private string GetVehicleOwnerName()
         {
-            string inputVehicleOwnerNameStr = "";
-            //check if its not empty name string
-            while (inputVehicleOwnerNameStr == "")
+            string inputVehicleOwnerNameStr = string.Empty;
+
+            // Check if its not empty name string
+            while (inputVehicleOwnerNameStr == string.Empty)
             {
                 Console.WriteLine("Please type the vehicle owner name");
                 inputVehicleOwnerNameStr = Console.ReadLine();
             }
+
             return inputVehicleOwnerNameStr;
         }
 
@@ -380,13 +362,12 @@ namespace Ex03.ConsoleUI
         private eVehicleType GetVehicleType()
         {
             eVehicleType newVehicleType;
-            string inputVehicleType = "";
-            Console.WriteLine("Choose the vehicle type by the number:");
+            string inputVehicleType = string.Empty;
+            Console.WriteLine("Choose the number of the vehicle type :");
             int counter = 1;
             foreach (eVehicleType vehicleType in eVehicleType.GetValues(typeof(eVehicleType)))
             {
-                Console.WriteLine(counter + ")" + vehicleType);
-                counter++;
+                Console.WriteLine((counter + 1) + ")" + vehicleType);
             }
 
             switch (inputVehicleType)
@@ -406,123 +387,76 @@ namespace Ex03.ConsoleUI
                 case "5":
                     newVehicleType = eVehicleType.Truck;
                     break;
-                default: //in case of new type of vehicle which still not implemented.
+                default: // In case of new type of vehicle which still not implemented.
                     newVehicleType = eVehicleType.Else;
                     break;
             }
+
             return newVehicleType;
         }
 
         // Adding wheels information from user
-        private List<Wheel> GetWheelList(eVehicleType i_VehicleType)
+        private List<Wheel> GetWheelList()
         {
             List<Wheel> newWheelList = new List<Wheel>();
-            float inputNumberOfWheels = NumOfWheels(i_VehicleType); 
+            float inputNumberOfWheels;
+            inputNumberOfWheels = ChooseNumOf("number of wheels of the vehicle");
             for (int numOfWheel = 0; numOfWheel < inputNumberOfWheels; numOfWheel++)
             {
                 Console.WriteLine("Wheel No." + (numOfWheel + 1) + " :");
 
-                float inputMaxPossiblePressure = MaxPossiblePressure(i_VehicleType);
-                string inputWheelManufacture = "";
+                float inputMaxPossiblePressure;
+                string inputWheelManufacture = string.Empty;
                 float inputAirPressure;
+
                 inputMaxPossiblePressure = ChooseNumOf("max possible air pressoure in wheel (float)");
 
-                //check if its not empty  wheel manufacture name string                   
-                while (inputWheelManufacture == "")
+                // Check if its not empty  wheel manufacture name string                   
+                while (inputWheelManufacture == string.Empty)
                 {
                     Console.WriteLine("Please type the wheel No." + numOfWheel + " manufacture name");
                     inputWheelManufacture = Console.ReadLine();
                 }
 
                 inputAirPressure = ChooseNumOf("air pressoure in wheel No." + numOfWheel + "(float)", 0, inputMaxPossiblePressure);
+
                 Wheel newWheel = new Wheel(inputWheelManufacture, inputAirPressure, inputMaxPossiblePressure);
                 newWheelList.Add(newWheel);
             }
+
             return newWheelList;
         }
 
-        // Get maximum air pressure in wheel by vehicle type.
-        private float MaxPossiblePressure(eVehicleType i_VehicleType)
+        // Helper to get energy type from the user.
+        private eEnergyType getEnergyInput()
         {
-            float maxAirPressureInWheel;
-            switch (i_VehicleType)
-            {
-                case eVehicleType.MotoricBike:
-                    maxAirPressureInWheel = 31;
-                    break;
-                case eVehicleType.ElecticBike:
-                    maxAirPressureInWheel = 31F;
-                    break;
-                case eVehicleType.MotoricCar:
-                    maxAirPressureInWheel = 30F;
-                    break;
-                case eVehicleType.ElectricCar:
-                    maxAirPressureInWheel = 30F;
-                    break;
-                case eVehicleType.Truck:
-                    maxAirPressureInWheel = 28F;
-                    break;
-                default:
-                    maxAirPressureInWheel = ChooseNumOf("maximum air pressure in wheel (float)");
-                    break;
-            }
-            return maxAirPressureInWheel;
-        }
-        
-        // Get number of wheels for the vehicle by the type 
-        private int NumOfWheels(eVehicleType i_VehicleType)
-        {
-            int numOfWheels;
-            switch (i_VehicleType)
-            {
-                case eVehicleType.MotoricBike:
-                    numOfWheels = 2;
-                    break;
-                case eVehicleType.ElecticBike:
-                    numOfWheels = 2;
-                    break;
-                case eVehicleType.MotoricCar:
-                    numOfWheels = 4;
-                    break;
-                case eVehicleType.ElectricCar:
-                    numOfWheels = 4;
-                    break;
-                case eVehicleType.Truck:
-                    numOfWheels = 16;
-                    break;
-                default:
-                    numOfWheels = (int)(ChooseNumOf("number of wheels (int)"));
-                    break;
-            }
-            return numOfWheels;
-        }
-
-        // Helper to get energy type by vehicle type.
-        private eEnergyType getEnergyInput(eVehicleType i_VehicleType)
-        {
+            Console.WriteLine("What energy type your vehicle use from the list, in case of other type just it's name:"
+                + "\n -Electricity- -Octan95- -Octan96- -Octan98- -Soler- ");
+            string inputEnergyTypeStr = Console.ReadLine();
             eEnergyType newEnergyType;
-    
-            switch (i_VehicleType)
+           
+            switch (inputEnergyTypeStr)
             {
-                case eVehicleType.MotoricBike:
+                case "Electricity":
+                    newEnergyType = eEnergyType.Electricity;
+                    break;
+                case "Octan95":
                     newEnergyType = eEnergyType.Octan95;
                     break;
-                case eVehicleType.ElecticBike:
-                    newEnergyType = eEnergyType.Electricity;
+                case "Octan96":
+                    newEnergyType = eEnergyType.Octan96;
                     break;
-                case eVehicleType.MotoricCar:
+                case "Octan98":
                     newEnergyType = eEnergyType.Octan98;
                     break;
-                case eVehicleType.ElectricCar:
-                    newEnergyType = eEnergyType.Electricity;
-                    break;
-                case eVehicleType.Truck:
+                case "Soler":
                     newEnergyType = eEnergyType.Soler;
                     break;
-                default:
+                default: // In case of new type of energy which still not implemented.
                     newEnergyType = eEnergyType.DeFault;
                     break;
             }
+
             return newEnergyType;
         }
 
@@ -533,6 +467,7 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine((service + 1) + ") " + i_ServiceList[service].ServiceString);
             }
+
             Console.WriteLine((i_ServiceList.Count + 1) + ") Finish");
             string inputNumStr = Console.ReadLine();
             int inputServiceNumInt;
@@ -543,6 +478,7 @@ namespace Ex03.ConsoleUI
                 inputNumStr = Console.ReadLine();
                 goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);
             }
+
             return (eService)(inputServiceNumInt - 1);
         }
 

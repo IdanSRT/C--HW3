@@ -12,7 +12,6 @@ namespace Ex03.GarageLogic
         private float m_MaxValue;
         private string m_Message;
 
-       
         // Constractor
         public ValueOutOfRangeException(Exception i_InnerException, float i_MinValue, float i_MaxValue, string i_Message)
             : base(string.Format(i_Message, i_MinValue, i_MaxValue), i_InnerException)
@@ -20,14 +19,17 @@ namespace Ex03.GarageLogic
             m_Message = i_Message;
             m_MinValue = i_MinValue;
             m_MaxValue = i_MaxValue;
-
         }
 
         // Default m_Message Constructor
-        public ValueOutOfRangeException(Exception i_InnerException, float i_MinValue, float i_MaxValue)
-            : base(string.Format("An error occured while trying enter a value that is not in the range of {0} and {1}", i_MinValue, i_MaxValue),
-            i_InnerException)
-        { }
+        public ValueOutOfRangeException(
+            Exception i_InnerException,
+            float i_MinValue,
+            float i_MaxValue) : 
+            base(
+            string.Format("An error occured while trying enter a value that is not in the range of {0} and {1}", i_MinValue, i_MaxValue), i_InnerException)
+        { 
+        }
 
         // Message gettter
         public override string Message

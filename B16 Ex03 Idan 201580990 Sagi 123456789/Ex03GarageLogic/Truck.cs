@@ -12,7 +12,8 @@ namespace Ex03.GarageLogic
         public float m_MaxWeight;
 
         // Constructor
-        public Truck(string i_ModelName,
+        public Truck(
+            string i_ModelName,
             string i_LisenseNum,
             float i_EnergyLeft, 
             List<Wheel> i_WeelsList,
@@ -39,6 +40,5 @@ namespace Ex03.GarageLogic
             get { return m_HasDangerouseMaterial; }
             set { m_HasDangerouseMaterial = value; }
         }
-        
     }
 }

@@ -20,11 +20,10 @@ namespace Ex03.ConsoleUI
 
     public class Service
     {
-
         private string m_ServiceString;
         private Enum m_eService;
 
-        //constructor of object Service
+        // Constructor of object Service
         public Service(string i_ServiceOffered, Enum i_Service)
         {
             m_ServiceString = i_ServiceOffered;

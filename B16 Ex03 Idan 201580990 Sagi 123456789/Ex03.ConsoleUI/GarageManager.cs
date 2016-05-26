@@ -7,9 +7,8 @@ using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
-    class GarageManager
+    public class GarageManager
     {
-
         private List<VehicleStatusInfo> m_VehiclesList;
         private int m_NumberOfVehicles;
         public List<Service> m_ServiceList;
@@ -28,29 +27,28 @@ namespace Ex03.ConsoleUI
             set { m_VehiclesList = value; }
         }
 
-        //constructor default.
+        // Constructor default.
         public GarageManager()
         {
             m_VehiclesList = new List<VehicleStatusInfo>();
             m_NumberOfVehicles = 0;
             m_ServiceList = new List<Service>();
-            m_ServiceList.Add(new Service(("Enter a new car for repairing in the garage."), eService.AddVehical));
-            m_ServiceList.Add(new Service(("Print vehicle List in the Garage."), eService.PrintVehicalList));
-            m_ServiceList.Add(new Service(("Update vehicle status in the garage."), eService.UpdateVehicleStatus));
-            m_ServiceList.Add(new Service(("Fill air in the Vehicle wheels."), eService.FillAirInWheels));
-            m_ServiceList.Add(new Service(("Fuel up vehicle feul tank."), eService.FuelUpTank));
-            m_ServiceList.Add(new Service(("Charge up vehicle battery."), eService.ChargeUpBattery));
-            m_ServiceList.Add(new Service(("Print vehicle full info and status."), eService.PrintVehicleInfo));
+            m_ServiceList.Add(new Service("Enter a new car for repairing in the garage.", eService.AddVehical));
+            m_ServiceList.Add(new Service("Print vehicle List in the Garage.", eService.PrintVehicalList));
+            m_ServiceList.Add(new Service("Update vehicle status in the garage.", eService.UpdateVehicleStatus));
+            m_ServiceList.Add(new Service("Fill air in the Vehicle wheels.", eService.FillAirInWheels));
+            m_ServiceList.Add(new Service("Fuel up vehicle feul tank.", eService.FuelUpTank));
+            m_ServiceList.Add(new Service("Charge up vehicle battery.", eService.ChargeUpBattery));
+            m_ServiceList.Add(new Service("Print vehicle full info and status.", eService.PrintVehicleInfo));
         }
         
         // Constuctor with custome services
-        public  GarageManager(List<Service> i_ServiceList)
+        public GarageManager(List<Service> i_ServiceList)
         {
             m_VehiclesList = new List<VehicleStatusInfo>();
             m_NumberOfVehicles = 0;
             m_ServiceList = i_ServiceList;
         }
-
 
         // (1) To add new vehicle to the garage and to check if he allready inside.
         public void AddVehicle(string i_LicenseNumber, string i_VehicleOwnerName, string i_VehicleOwnerPhone, Vehicle i_Vehicle)
@@ -60,7 +58,7 @@ namespace Ex03.ConsoleUI
                 m_NumberOfVehicles++;
         }
         
-        //(2) Present list of vehicles in the garage
+        // (2) Present list of vehicles in the garage
         public void PrintVehicleList()
         {
             Console.WriteLine("List of Vehicles in the garage:");
@@ -70,7 +68,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        //(2) Present filtered list of vehicles in the garage status.
+        // (2) Present filtered list of vehicles in the garage status.
         public void PrintFilteredVehicleList(eVehicleStatus i_VehicleStatus)
         {
             Console.WriteLine("List of Vehicles in the garage filtered by the status" + i_VehicleStatus);
@@ -83,13 +81,13 @@ namespace Ex03.ConsoleUI
             }
         }
         
-        //(3) updace the vehicle status by the number license with the new status.
-        public void UpdateVehicleStatus(String i_LicenseNumber, eVehicleStatus i_VehicleStatus)
+        // (3) updace the vehicle status by the number license with the new status.
+        public void UpdateVehicleStatus(string i_LicenseNumber, eVehicleStatus i_VehicleStatus)
         {
             m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].VehicleStatus = i_VehicleStatus;
         }
 
-        //(4) Fill air in wheels.
+        // (4) Fill air in wheels.
         public void FillAir(string i_LicenseNumber)
         {
             List<Wheel> vehicleWheelsList = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList;
@@ -101,13 +99,12 @@ namespace Ex03.ConsoleUI
             }
         }
 
-
-        //(5)+(6) Fill up Fuel tank for motoric vehicle and charge battery.
+        // (5)+(6) Fill up Fuel tank for motoric vehicle and charge battery.
         public void AddEnergy(string i_LicenseNumber)
         {
             Vehicle currVehicle = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle;
             eEnergyType vehicleEnergyType = currVehicle.m_EngineEnergyType;
-            float vehicleEnergyToAdd= currVehicle.EnergyLeft - currVehicle.MaxEnergy;
+            float vehicleEnergyToAdd = currVehicle.EnergyLeft - currVehicle.MaxEnergy;
             currVehicle.AddEnergy(vehicleEnergyType, vehicleEnergyToAdd);
         }
 
@@ -125,11 +122,9 @@ namespace Ex03.ConsoleUI
             //Console.WriteLine("Vehicle wheels manufacturer :" + vehicleStatusInfo.Vehicle.WheelsList[1].Manufacture);
             //Console.WriteLine("Vehicle energy type :" + vehicleStatusInfo.Vehicle.m_EngineEnergyType);
             //Console.WriteLine("Vehicle energy Status :" + vehicleStatusInfo.Vehicle.m_EnergyLeft);
-            
-            
         }
 
-        //check if vehical allready in the garage and return its index on the vehicle status list, if not return -1.
+        // Check if vehical allready in the garage and return its index on the vehicle status list, if not return -1.
         public int IndexOfVehicle(string i_LicenseNumber)
         {
             int VehicleIndexOnList = -1;
@@ -140,6 +135,7 @@ namespace Ex03.ConsoleUI
                     VehicleIndexOnList = index;
                 }
             }
+
             return VehicleIndexOnList;
         }
         
@@ -156,6 +152,5 @@ namespace Ex03.ConsoleUI
         //    sb.AppendLine();
         //    Console.WriteLine(sb.ToString());
         //}
-        
     }
 }

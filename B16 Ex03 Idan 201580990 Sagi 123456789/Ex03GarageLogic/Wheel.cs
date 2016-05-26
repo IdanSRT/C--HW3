@@ -9,9 +9,9 @@ namespace Ex03.GarageLogic
     // Constructor
     public class Wheel
     {
-        string m_Manufacture;
-        float m_AirPressure;
-        float m_MaxPssiblePressure;
+        private string m_Manufacture;
+        private float m_AirPressure;
+        private float m_MaxPssiblePressure;
 
         public Wheel(string i_Manufacture, float i_AirPressure, float i_MaxPossiblePressure)
         {
@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
         // Manufactur getter / setter
         public string Manufacture
         {
-            get { return m_Manufacture;}
+            get { return m_Manufacture; }
             set { m_Manufacture = value; }
         }
 
