@@ -171,7 +171,7 @@ namespace Ex03.ConsoleUI
             string vehicleOwnerPhone = GetVehicleOwnerPhone();
             string modelName = GetVehicleModleName();
             eEnergyType energyType = getEnergyInput();
-            float maxEnergy = GetMaxEnergy
+            float maxEnergy = GetMaxEnergy;
             float energyLeft = ChooseNumOf("energy Left in the vehicle (float)", 0, maxEnergy);
             List<Wheel> wheelList = GetWheelList();
             Vehicle newVehicle;
