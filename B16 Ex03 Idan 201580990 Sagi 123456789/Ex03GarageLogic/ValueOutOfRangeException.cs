@@ -29,19 +29,19 @@ namespace Ex03.GarageLogic
             i_InnerException)
         { }
 
-        // Message get / set
+        // Message gettter
         public override string Message
         {
             get { return m_Message; }
         }
 
-        // MinValue get / set
+        // MinValue getter
         public float MinValue
         {
             get { return MinValue; }
         }
 
-        // MaxValue get / set
+        // MaxValue getter
         public float MaxValue
         {
             get { return m_MaxValue; }

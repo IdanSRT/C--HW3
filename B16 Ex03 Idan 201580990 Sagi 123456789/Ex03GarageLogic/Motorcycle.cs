@@ -19,19 +19,22 @@ namespace Ex03.GarageLogic
         public eLisenceSize m_LisenceSize;
         public int m_EngineCapacity;
 
+        // Constructor
         public Motorcycle(string i_ModelName, string i_LisenseNum, float i_EnergyLeft, List<Wheel> i_WeelsList, eEnergyType i_FuleType, float i_MaxEnergy,
             eLisenceSize i_LisenceSize, int i_EngineCapasity) : base(i_ModelName, i_LisenseNum, i_EnergyLeft, i_WeelsList, i_FuleType, i_MaxEnergy)
         {
             m_LisenceSize = i_LisenceSize;
             m_EngineCapacity = i_EngineCapasity;
-
         }
 
+        // EngineCapacity getter / setter
         public int EngineCapacity
         {
             get { return m_EngineCapacity; }
             set { m_EngineCapacity = value; }
         }
+
+        // LisenceSize getter / setter
         public eLisenceSize LisenceSize
         {
             get { return m_LisenceSize; }
