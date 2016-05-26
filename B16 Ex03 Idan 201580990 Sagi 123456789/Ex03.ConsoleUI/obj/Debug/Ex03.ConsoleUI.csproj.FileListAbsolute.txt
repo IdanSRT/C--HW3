@@ -1,8 +1,0 @@
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.exe.config
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.exe
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.pdb
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03.ConsoleUI\bin\Debug\Ex03.GarageLogic.dll
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03.ConsoleUI\bin\Debug\Ex03.GarageLogic.pdb
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csprojResolveAssemblyReference.cache
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.exe
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.pdb
