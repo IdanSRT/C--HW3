@@ -15,7 +15,7 @@ namespace Ex03.ConsoleUI
         Piad
     }
 
-    class UIManager
+    public class UIManager
     {
         private GarageManager m_GarageManager;
 
@@ -89,8 +89,6 @@ namespace Ex03.ConsoleUI
             {
                 i_GarageManager.PrintVehicleInfo(VehicleLicenseNum);
             }
-            
-            
         }
 
         // Update the vehicle Status;
@@ -160,6 +158,7 @@ namespace Ex03.ConsoleUI
                 inputLicenseNumberStr = Console.ReadLine();
                 licenseNumber = inputLicenseNumberStr;
             }
+
             return licenseNumber;
         }
 
@@ -206,6 +205,7 @@ namespace Ex03.ConsoleUI
                     newVehicle = new Vehicle(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy);
                     break;
             }
+
             VehicleStatusInfo newVehicleStatusInfo = new VehicleStatusInfo(i_LicenseNumber, vehicleOwnerName, vehicleOwnerPhone, newVehicle);
             return newVehicleStatusInfo;
         }
@@ -232,6 +232,7 @@ namespace Ex03.ConsoleUI
                     Console.WriteLine("Please type 'Y' or 'N' , its dangerouse !");
                 }
             }
+
             return IsDangerouse;
         }
 
@@ -267,6 +268,7 @@ namespace Ex03.ConsoleUI
                     licenseSize = eLisenceSize.Other;
                     break;
             }
+
             return licenseSize;
         }
 
@@ -309,12 +311,13 @@ namespace Ex03.ConsoleUI
         private string GetVehicleModleName()
         {
             string inputModelName = "";
-            //check if its not empty vehicle model name string
+            // Check if its not empty vehicle model name string
             while (inputModelName == "")
             {
                 Console.WriteLine("Please type the vehicle owner name");
                 inputModelName = Console.ReadLine();
             }
+
             return inputModelName;
         }
         
@@ -323,7 +326,7 @@ namespace Ex03.ConsoleUI
         {
             string inputVehicleOwnerPhoneStr = "";
             bool goodInputPhone = false;
-            //check if its not empty string or not a number under the thought that there isnot '-' or ' ' in the string
+            // Check if its not empty string or not a number under the thought that there isnot '-' or ' ' in the string
             while (inputVehicleOwnerPhoneStr == "" && !goodInputPhone)
             {
                 Console.WriteLine("Please type the vehicle owner phone number");
@@ -331,6 +334,7 @@ namespace Ex03.ConsoleUI
                 int inputNumInt;
                 goodInputPhone = int.TryParse(inputVehicleOwnerPhoneStr, out inputNumInt);
             }
+
             return inputVehicleOwnerPhoneStr;
         }
 
@@ -338,12 +342,13 @@ namespace Ex03.ConsoleUI
         private string GetVehicleOwnerName()
         {
             string inputVehicleOwnerNameStr = "";
-            //check if its not empty name string
+            // Check if its not empty name string
             while (inputVehicleOwnerNameStr == "")
             {
                 Console.WriteLine("Please type the vehicle owner name");
                 inputVehicleOwnerNameStr = Console.ReadLine();
             }
+
             return inputVehicleOwnerNameStr;
         }
 
@@ -358,6 +363,7 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine((counter + 1) + ")" + vehicleType);
             }
+
             switch (inputVehicleType)
             {
                 case "1":
@@ -379,6 +385,7 @@ namespace Ex03.ConsoleUI
                     newVehicleType = eVehicleType.Else;
                     break;
             }
+
             return newVehicleType;
         }
 
@@ -410,6 +417,7 @@ namespace Ex03.ConsoleUI
                 Wheel newWheel = new Wheel(inputWheelManufacture, inputAirPressure, inputMaxPossiblePressure);
                 newWheelList.Add(newWheel);
             }
+
             return newWheelList;
         }
 
@@ -442,6 +450,7 @@ namespace Ex03.ConsoleUI
                     newEnergyType = eEnergyType.DeFault;
                     break;
             }
+
             return newEnergyType;
         }
 
@@ -452,6 +461,7 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine((service + 1) + ") " + i_ServiceList[service].ServiceString);
             }
+
             Console.WriteLine((i_ServiceList.Count + 1) + ") Finish");
             string inputNumStr = Console.ReadLine();
             int inputServiceNumInt;
@@ -462,6 +472,7 @@ namespace Ex03.ConsoleUI
                 inputNumStr = Console.ReadLine();
                 goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);
             }
+
             return (eService)(inputServiceNumInt - 1);
         }
 

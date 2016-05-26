@@ -16,7 +16,6 @@ namespace Ex03.ConsoleUI
 
     public class VehicleStatusInfo
     {
-        
         private String m_LicenseNumber;
         private String m_VehicleOwnerName;
         private String m_VehicleOwnerPhone;
@@ -29,7 +28,6 @@ namespace Ex03.ConsoleUI
             get { return m_VehicleType; }
             set { m_VehicleType = value; }
         }
-
 
         public Vehicle Vehicle
         {

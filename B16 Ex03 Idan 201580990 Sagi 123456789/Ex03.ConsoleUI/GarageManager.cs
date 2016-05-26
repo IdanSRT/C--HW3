@@ -43,7 +43,7 @@ namespace Ex03.ConsoleUI
         }
         
         // Constuctor with custome services
-        public  GarageManager(List<Service> i_ServiceList)
+        public GarageManager(List<Service> i_ServiceList)
         {
             m_VehiclesList = new List<VehicleStatusInfo>();
             m_NumberOfVehicles = 0;
@@ -135,6 +135,7 @@ namespace Ex03.ConsoleUI
                     VehicleIndexOnList = index;
                 }
             }
+
             return VehicleIndexOnList;
         }
         
@@ -151,6 +152,5 @@ namespace Ex03.ConsoleUI
         //    sb.AppendLine();
         //    Console.WriteLine(sb.ToString());
         //}
-        
     }
 }
