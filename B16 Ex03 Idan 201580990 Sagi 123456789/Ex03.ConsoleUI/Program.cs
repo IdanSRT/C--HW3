@@ -10,7 +10,7 @@ namespace Ex03.ConsoleUI
     {
         public static void Main()
         {
-            
+            Console.WriteLine("\nHello Customer, welcome to our humble garage. \nPlease choose one of the following options:");
             UIManager newUIManager = new UIManager();
             newUIManager.StartService();
 

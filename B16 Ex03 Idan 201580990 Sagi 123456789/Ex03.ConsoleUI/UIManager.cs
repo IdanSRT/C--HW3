@@ -448,7 +448,6 @@ namespace Ex03.ConsoleUI
         //UI for choosing one of the option in the serice enum list.
         public static eService ServiceOptionChoose(List<Service> i_ServiceList)
         {
-            Console.WriteLine("Hello dear custumer and thanks for coming to our humble garage. \nPlease choose one of the following options:");
             for (int service = 0; service < i_ServiceList.Count; service++)
             {
                 Console.WriteLine((service + 1) + ") " + i_ServiceList[service].ServiceString);
@@ -459,7 +458,7 @@ namespace Ex03.ConsoleUI
             bool goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);
             while (!goodInput || inputServiceNumInt < 1 || inputServiceNumInt > i_ServiceList.Count)
             {
-                Console.WriteLine("Input is not valid. \nPlease choose a service number between the range " + 0 + " to " + i_ServiceList.Count + ":");
+                Console.WriteLine("Input is not valid. \nPlease choose a service number between the range " + 1 + " to " + i_ServiceList.Count + ":");
                 inputNumStr = Console.ReadLine();
                 goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);
             }
