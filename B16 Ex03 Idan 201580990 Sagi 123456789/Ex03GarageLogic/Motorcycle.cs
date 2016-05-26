@@ -11,7 +11,8 @@ namespace Ex03.GarageLogic
         A,
         A1,
         AB,
-        B1
+        B1,
+        Other
     }
     public class Motorcycle : Vehicle
     {

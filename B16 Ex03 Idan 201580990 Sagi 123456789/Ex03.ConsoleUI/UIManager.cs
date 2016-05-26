@@ -30,16 +30,24 @@ namespace Ex03.ConsoleUI
             newGarageManager.ServiceList.Add(new Service(("Fuel up vehicle feul tank."), eService.FuelUpTank));
             newGarageManager.ServiceList.Add(new Service(("Charge up vehicle battery."), eService.ChargeUpBattery));
             newGarageManager.ServiceList.Add(new Service(("Print vehicle full info and status."), eService.PrintVehicleInfo));
-            
+
             //user choose the service he wish for.
-            eService serviceOptionChoose = ServiceOptionChoose(newGarageManager.m_ServiceList);           
+            eService serviceOptionChoose = ServiceOptionChoose(newGarageManager.m_ServiceList);
             switch (serviceOptionChoose)
             {
                 case eService.AddVehical: //1 
-                    string VehicleLicenseNum = getNewLicenseNum();    
-                    VehicleStatusInfo newVehicleStatusInfo = CheckOrGetVehicleStatusInfo();
-                    if(newVehicleStatusInfo )
-                    newGarageManager.VehicleList.Add(newVehicleStatusInfo);                   
+                    string VehicleLicenseNum = getNewLicenseNum();
+                    int indexOnList = newGarageManager.IndexOfVehicle(VehicleLicenseNum);
+                    if (indexOnList != -1)
+                    {
+                        Console.WriteLine("Vehicle L.N " + VehicleLicenseNum +
+                    " is allready in the garage and his status is " + newGarageManager.VehicleList[indexOnList].VehicleStatus);
+                    }
+                    else
+                    {
+                        VehicleStatusInfo newVehicleStatusInfo = GetNewVehicleStatusInfo(VehicleLicenseNum); 
+                        newGarageManager.VehicleList.Add(newVehicleStatusInfo);
+                    }
                     break;
                 case eService.PrintVehicalList:
                     Console.WriteLine("option 2 was picked");
@@ -65,7 +73,7 @@ namespace Ex03.ConsoleUI
                 default:
                     Console.WriteLine("Please choose a valide option from our service");
                     break;
-            }          
+            }
         }
         //geting the license number from the user.
         private static string getNewLicenseNum()
@@ -82,34 +90,7 @@ namespace Ex03.ConsoleUI
             return licenseNumber;
         }
 
-        //takeing a vehicle license number and check if allready in the garage and returning the status or creating a new vehicleStatusInfo.
-        private VehicleStatusInfo CheckOrGetVehicleStatusInfo()
-        {
-            VehicleStatusInfo newVehicleStatusInfo;
-            Console.WriteLine("Enter your vehicle license number");
-            string inputLicenseNumberStr = Console.ReadLine();
-            while (inputLicenseNumberStr == "")
-            {
-                Console.WriteLine("Please enter a valide vehicle license number");
-                inputLicenseNumberStr = Console.ReadLine();
-            }
-            int indexOnList = m_GarageManager.IndexOfVehicle(inputLicenseNumberStr);
-            
-            //vehicle is allready in the garage, printing the vehicle status.
-            if (indexOnList != -1)
-            {
-                Console.WriteLine("Vehicle L.N " + inputLicenseNumberStr +
-                    " is allready in the garage and his status is " + m_GarageManager.VehicleList[indexOnList].VehicleStatus);
-                newVehicleStatusInfo = null;
-            }
-            //vehicle isnt in the garage and we start taking information for the new vehicle.
-            else
-            {
-                newVehicleStatusInfo = GetNewVehicleStatusInfo(inputLicenseNumberStr);               
-            }
-            return newVehicleStatusInfo;
-        }
-
+        //takeing a vehicle license number and creating a new vehicleStatusInfo.
         private VehicleStatusInfo GetNewVehicleStatusInfo(string i_LicenseNumber)
         {
             eVehicleType vehicleType = GetVehicleType();
@@ -119,18 +100,140 @@ namespace Ex03.ConsoleUI
             eEnergyType energyType = getEnergyInput();
             float maxEnergy = ChooseNumOf("max energy of the vehicle (float)");
             float energyLeft = ChooseNumOf("energy Left in the vehicle (float)", 0, maxEnergy);
-                      
             List<Wheel> wheelList = GetWheelList();
-            Vehicle newVehicle = new Vehicle(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy);
-            VehicleStatusInfo newVehicleStatusInfo = new VehicleStatusInfo(i_LicenseNumber, vehicleOwnerName, vehicleOwnerPhone, newVehicle);
-            AdditionalInfo(vehicleType, newVehicle);
+            Vehicle newVehicle;
+            switch (vehicleType)
+            {
+                case eVehicleType.MotoricCar:
+                    eColor motorCarcolor = GetColor();
+                    int motorCarNumOfDoors = GetNumOfDoors();
+                    newVehicle = new Car(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy, motorCarcolor, motorCarNumOfDoors);
+                    break;
+                case eVehicleType.ElectricCar:
+                    eColor elctCarColor = GetColor();
+                    int elctCarNumOfDoors = GetNumOfDoors();
+                    newVehicle = new Car(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy, elctCarColor, elctCarNumOfDoors);
+                    break;
+                case eVehicleType.MotoricBike:
+                    eLisenceSize licenseSize = GetLicenseSize();
+                    int engineCapacity = GetEngineCapacity();
+                    newVehicle = new Motorcycle(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy, licenseSize, engineCapacity);
+                    break;
+                case eVehicleType.ElecticBike:
+                    eLisenceSize elctLicenseSize = GetLicenseSize();
+                    int elctEngineCapacity = GetEngineCapacity();
+                    newVehicle = new Motorcycle(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy, elctLicenseSize, elctEngineCapacity);
+                    break;
+                case eVehicleType.Truck:
+                    bool hasDangerouseMaterial = IsDangerouse();
+                    float maxWeight = ChooseNumOf("max weight of the truck");
+                    newVehicle = new Truck(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy,hasDangerouseMaterial, maxWeight);
+                    break;
+                default:
+                    newVehicle = new Vehicle(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy);
+                    break;
+            }
 
-            return newVehicleStatusInfo;        
+
+            newVehicle = new Vehicle(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy);
+            VehicleStatusInfo newVehicleStatusInfo = new VehicleStatusInfo(i_LicenseNumber, vehicleOwnerName, vehicleOwnerPhone, newVehicle);
+
+            return newVehicleStatusInfo;
         }
 
-        private void AdditionalInfo(eVehicleType vehicleType, Vehicle newVehicle)
+        //check with the user if the truck is dangerouse.
+        private bool IsDangerouse()
         {
-            
+            Console.WriteLine("Does the truck contain dangerouse metirials ? (Y/N)");
+            bool IsDangerouse = false;
+            bool goodInput = false;
+            while (goodInput == false)
+            {
+                string inputIsDangerouse = Console.ReadLine();
+                if ((inputIsDangerouse == "y") || (inputIsDangerouse == "Y"))
+                {
+                    IsDangerouse = true;
+                }
+                else if ((inputIsDangerouse == "n") || (inputIsDangerouse == "N"))
+                {
+                    IsDangerouse = false;
+                }
+                else
+                {
+                    Console.WriteLine("Please type 'Y' or 'N' , its dangerouse !");
+                }
+            }
+            return IsDangerouse;
+        }
+
+        //get the engine capasitiy for the user.
+        private int GetEngineCapacity()
+        {
+            int inputEngineCapacity = (int)ChooseNumOf("engine capacity");
+            return inputEngineCapacity;
+        }
+
+        //get the license size from the user.
+        private eLisenceSize GetLicenseSize()
+        {
+            eLisenceSize licenseSize = eLisenceSize.Other;
+            Console.WriteLine("Choose the number of the license Size :\n"
+                + "(1)A   " + "(2)A1   " + "(3)AB   " + "(4)B1   " + "(5)Other");
+            string inputLicenseSizeStr = Console.ReadLine();
+            switch (inputLicenseSizeStr)
+            {
+                case "1":
+                    licenseSize = eLisenceSize.A;
+                    break;
+                case "2":
+                    licenseSize = eLisenceSize.A1;
+                    break;
+                case "3":
+                    licenseSize = eLisenceSize.AB;
+                    break;
+                case "4":
+                    licenseSize = eLisenceSize.B1;
+                    break;
+                case "5":
+                    licenseSize = eLisenceSize.Other;
+                    break;
+            }
+            return licenseSize;
+        }
+
+        //get number of doors of the car from the user.
+        private int GetNumOfDoors()
+        {
+            int inputNumOfDoors = (int)ChooseNumOf("number of doors for the car (2-5)");
+            return inputNumOfDoors;
+        }
+        
+        //get car color from the user.
+        private eColor GetColor()
+        {
+            eColor inputColor= eColor.Other;
+            Console.WriteLine("Choose the number of the car color :\n"
+                + "(1)Yello  " + "(2)White  " + "(3)Red  " + "(4)Black  " + "(5)Other  ");
+            string inputColorStr = Console.ReadLine();
+            switch (inputColorStr)
+            {
+                case "1":
+                    inputColor = eColor.Yellow;
+                    break;
+                case "2":
+                    inputColor = eColor.White;
+                    break;
+                case "3":
+                    inputColor = eColor.Red;
+                    break;
+                case "4":
+                    inputColor = eColor.Black;
+                    break;
+                case "5":
+                    inputColor = eColor.Other;
+                    break;
+            }
+            return inputColor;
         }
 
         //geting vehicle model name from the user.
