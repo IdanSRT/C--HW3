@@ -14,14 +14,14 @@ namespace Ex03.ConsoleUI
         private int m_NumberOfVehicles;
         public List<Service> m_ServiceList;
         
-        //set/get method to the service list field
+        // Set/get method to the service list field
         public List<Service> ServiceList
         {
             get { return m_ServiceList; }
             set { m_ServiceList = value; }
         }
 
-        //set/get method to the vehicle list field
+        // Set/get method to the vehicle list field
         public List<VehicleStatusInfo> VehicleList
         {
             get { return m_VehiclesList; }
@@ -43,7 +43,7 @@ namespace Ex03.ConsoleUI
             m_ServiceList.Add(new Service(("Print vehicle full info and status."), eService.PrintVehicleInfo));
         }
         
-        //constuctor with custome services
+        // Constuctor with custome services
         public  GarageManager(List<Service> i_ServiceList)
         {
             m_VehiclesList = new List<VehicleStatusInfo>();
@@ -52,7 +52,7 @@ namespace Ex03.ConsoleUI
         }
 
 
-        //(1) to add new vehicle to the garage and to check if he allready inside.
+        // (1) To add new vehicle to the garage and to check if he allready inside.
         public void AddVehicle(string i_LicenseNumber, string i_VehicleOwnerName, string i_VehicleOwnerPhone, Vehicle i_Vehicle)
         {
                 VehicleStatusInfo newVehicle = new VehicleStatusInfo(i_LicenseNumber, i_VehicleOwnerName, i_LicenseNumber, i_Vehicle);
@@ -92,14 +92,16 @@ namespace Ex03.ConsoleUI
         //(4) Fill air in wheels.
         public void FillAir(string i_LicenseNumber)
         {
-            float vehicleWheelMaxAirPressire = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList[1].MaxPossiblePressure;
-             List<Wheel> vehicleWheels = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList;
-            foreach (Wheel wheel in vehicleWheels)
+            List<Wheel> vehicleWheelsList = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList;
+            foreach (Wheel currWheel in vehicleWheelsList)
             {
-                wheel.AddAir(vehicleWheelMaxAirPressire);
+                // Calculate the amount of air to fill
+                float currWheelAirPressureToAdd = currWheel.MaxPossiblePressure - currWheel.AirPressure;
+                currWheel.AddAir(currWheelAirPressureToAdd);
             }
         }
-      
+
+
         //(5)+(6) Fill up Fuel tank for motoric vehicle and charge battery.
         public void AddEnergy(string i_LicenseNumber)
         {
