@@ -133,11 +133,7 @@ namespace Ex03.ConsoleUI
                     newVehicle = new Vehicle(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy);
                     break;
             }
-
-
-            newVehicle = new Vehicle(modelName, i_LicenseNumber, energyLeft, wheelList, energyType, maxEnergy);
             VehicleStatusInfo newVehicleStatusInfo = new VehicleStatusInfo(i_LicenseNumber, vehicleOwnerName, vehicleOwnerPhone, newVehicle);
-
             return newVehicleStatusInfo;
         }
 
