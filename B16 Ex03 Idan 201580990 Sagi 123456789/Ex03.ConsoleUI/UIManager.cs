@@ -19,8 +19,9 @@ namespace Ex03.ConsoleUI
     {
         private GarageManager m_GarageManager;
 
-        public static void StartService()
+        public void StartService()
         {
+            
             //setting the garage with is services.
             GarageManager newGarageManager = new GarageManager();
             newGarageManager.ServiceList.Add(new Service(("Enter a new car for repairing in the garage."), eService.AddVehical));
@@ -31,50 +32,71 @@ namespace Ex03.ConsoleUI
             newGarageManager.ServiceList.Add(new Service(("Charge up vehicle battery."), eService.ChargeUpBattery));
             newGarageManager.ServiceList.Add(new Service(("Print vehicle full info and status."), eService.PrintVehicleInfo));
 
-            //user choose the service he wish for.
-            eService serviceOptionChoose = ServiceOptionChoose(newGarageManager.m_ServiceList);
-            switch (serviceOptionChoose)
+            bool isDone = false;
+            while (!isDone)
             {
-                case eService.AddVehical: //1 
-                    string VehicleLicenseNum = getNewLicenseNum();
-                    int indexOnList = newGarageManager.IndexOfVehicle(VehicleLicenseNum);
-                    if (indexOnList != -1)
-                    {
-                        Console.WriteLine("Vehicle L.N " + VehicleLicenseNum +
-                    " is allready in the garage and his status is " + newGarageManager.VehicleList[indexOnList].VehicleStatus);
-                    }
-                    else
-                    {
-                        VehicleStatusInfo newVehicleStatusInfo = GetNewVehicleStatusInfo(VehicleLicenseNum); 
-                        newGarageManager.VehicleList.Add(newVehicleStatusInfo);
-                    }
-                    break;
-                case eService.PrintVehicalList:
-                    PrintVehicleList(newGarageManager);
-                    break;
-                case eService.UpdateVehicleStatus:
-                    UpdateVehicleStatus(newGarageManager);
-                    break;
-                case eService.FillAirInWheels:
-                    Console.WriteLine("option 4 was picked");
-                    break;
-                case eService.FuelUpTank:
-                    Console.WriteLine("option 5 was picked");
-                    break;
-                case eService.ChargeUpBattery:
-                    Console.WriteLine("option 6 was picked");
-                    break;
-                case eService.PrintVehicleInfo:
-                    PrintVehicleInfo();
-                    break;
-                case eService.Done:
-                    Console.WriteLine("Thanks for using our service, have a nice day and good bye!");
-                    break;
-                default:
-                    Console.WriteLine("Please choose a valide option from our service");
-                    break;
+                //user choose the service he wish for.
+                eService serviceOptionChoose = ServiceOptionChoose(newGarageManager.m_ServiceList);
+                switch (serviceOptionChoose)
+                {
+                    case eService.AddVehical: //1 
+                        string VehicleLicenseNum = getNewLicenseNum();
+                        int indexOnList = newGarageManager.IndexOfVehicle(VehicleLicenseNum);
+                        if (indexOnList != -1)
+                        {
+                            Console.WriteLine("Vehicle L.N " + VehicleLicenseNum +
+                        " is allready in the garage and his status is " + newGarageManager.VehicleList[indexOnList].VehicleStatus);
+                        }
+                        else
+                        {
+                            newGarageManager.VehicleList.Add(GetNewVehicleStatusInfo(VehicleLicenseNum));
+                        }
+                        break;
+                    case eService.PrintVehicalList:
+                        PrintVehicleList(newGarageManager);
+                        break;
+                    case eService.UpdateVehicleStatus:
+                        UpdateVehicleStatus(newGarageManager);
+                        break;
+                    case eService.FillAirInWheels:
+                        Console.WriteLine("option 4 was picked");
+                        break;
+                    case eService.FuelUpTank:
+                        Console.WriteLine("option 5 was picked");
+                        break;
+                    case eService.ChargeUpBattery:
+                        Console.WriteLine("option 6 was picked");
+                        break;
+                    case eService.PrintVehicleInfo:
+                        PrintVehicleInfo();
+                        break;
+                    case eService.Done:
+                        Console.WriteLine("Thanks for using our service, have a nice day and good bye!");
+                        isDone = true;
+                        break;
+                    default:
+                        Console.WriteLine("Please choose a valide option from our service");
+                        break;
+                }
             }
         }
+        //printing vehicle info
+        private static void PrintVehicleInfo(GarageManager i_GarageManager)
+        {
+            string VehicleLicenseNum = getNewLicenseNum();
+            int indexOnList = i_GarageManager.IndexOfVehicle(VehicleLicenseNum);
+            if (indexOnList == -1)
+            {
+                Console.WriteLine("Vehicle L.N " + VehicleLicenseNum + " is not in the garage so we can't print his info");
+            }
+            else
+            {
+                i_GarageManager.PrintVehicleInfo(VehicleLicenseNum);
+            }
+            
+            
+        }
+
         //update the vehicle Status;
         private static void UpdateVehicleStatus(GarageManager i_GarageManager)
         {
@@ -82,8 +104,7 @@ namespace Ex03.ConsoleUI
             int indexOnList = i_GarageManager.IndexOfVehicle(VehicleLicenseNum);
             if (indexOnList == -1)
             {
-                Console.WriteLine("Vehicle L.N " + VehicleLicenseNum +
-            " is not in the garage " + i_GarageManager.VehicleList[indexOnList].VehicleStatus);
+                Console.WriteLine("Vehicle L.N " + VehicleLicenseNum + " is not in the garage ");
             }
             else
             {
@@ -147,7 +168,7 @@ namespace Ex03.ConsoleUI
         }
 
         //takeing a vehicle license number and creating a new vehicleStatusInfo.
-        private VehicleStatusInfo GetNewVehicleStatusInfo(string i_LicenseNumber)
+        public VehicleStatusInfo GetNewVehicleStatusInfo(string i_LicenseNumber)
         {
             eVehicleType vehicleType = GetVehicleType();
             string vehicleOwnerName = GetVehicleOwnerName();
