@@ -50,10 +50,10 @@ namespace Ex03.ConsoleUI
                     }
                     break;
                 case eService.PrintVehicalList:
-                    Console.WriteLine("option 2 was picked");
+                    PrintVehicleList(newGarageManager);
                     break;
                 case eService.UpdateVehicleStatus:
-                    Console.WriteLine("option 3 was picked");
+                    UpdateVehicleStatus(newGarageManager);
                     break;
                 case eService.FillAirInWheels:
                     Console.WriteLine("option 4 was picked");
@@ -75,6 +75,62 @@ namespace Ex03.ConsoleUI
                     break;
             }
         }
+        //update the vehicle Status;
+        private static void UpdateVehicleStatus(GarageManager i_GarageManager)
+        {
+            string VehicleLicenseNum = getNewLicenseNum();
+            int indexOnList = i_GarageManager.IndexOfVehicle(VehicleLicenseNum);
+            if (indexOnList == -1)
+            {
+                Console.WriteLine("Vehicle L.N " + VehicleLicenseNum +
+            " is not in the garage " + i_GarageManager.VehicleList[indexOnList].VehicleStatus);
+            }
+            else
+            {
+                Console.WriteLine("choose the status you wish to update vehicle :\n" +
+                            "(1)In repair  " + "(2)Repaired  " + "(3)Payed  " + "(any other key)other");
+                string inputListStr = Console.ReadLine();
+                switch (inputListStr)
+                {
+                    case "1":
+                        i_GarageManager.UpdateVehicleStatus(VehicleLicenseNum, eVehicleStatus.InRepair);
+                        break;
+                    case "2":
+                        i_GarageManager.UpdateVehicleStatus(VehicleLicenseNum, eVehicleStatus.Repaired);
+                        break;
+                    case "3":
+                        i_GarageManager.UpdateVehicleStatus(VehicleLicenseNum, eVehicleStatus.Piad);
+                        break;
+                    default:
+                        //do nothing , open for future options.
+                        break;
+                }
+            }
+        }
+
+        //helper for printing vehicle list.
+        private  static void PrintVehicleList(GarageManager i_GarageManager)
+        {
+            Console.WriteLine("choose what vehicle list you wish to print:\n" +
+                         "(1)In repair  " + "(2)Repaired  " + "(3)Payed  " + "(4)All-not filterd  ");
+            string inputListStr = Console.ReadLine();
+            switch (inputListStr)
+            {
+                case "1":
+                    i_GarageManager.PrintFilteredVehicleList(eVehicleStatus.InRepair);
+                    break;
+                case "2":
+                    i_GarageManager.PrintFilteredVehicleList(eVehicleStatus.Repaired);
+                    break;
+                case "3":
+                    i_GarageManager.PrintFilteredVehicleList(eVehicleStatus.Piad);
+                    break;
+                default:
+                    i_GarageManager.PrintVehicleList();
+                    break;
+            }
+        }
+
         //geting the license number from the user.
         private static string getNewLicenseNum()
         {
