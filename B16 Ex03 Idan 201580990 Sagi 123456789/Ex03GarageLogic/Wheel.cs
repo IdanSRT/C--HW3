@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
+    // Constructor
     public class Wheel
     {
         string m_Manufacture;
@@ -19,25 +20,28 @@ namespace Ex03.GarageLogic
             m_MaxPssiblePressure = i_MaxPossiblePressure;
         }
 
-
+        // Manufactur getter / setter
         public string Manufacture
         {
             get { return m_Manufacture;}
             set { m_Manufacture = value; }
         }
 
+        // AirePressure getter / setter
         public float AirPressure
         {
             get { return m_AirPressure; }
             set { m_AirPressure = value; }
         }
 
+        // MaxPossiblePressure getter / setter
         public float MaxPossiblePressure
         {
             get { return m_MaxPssiblePressure; }
             set { m_MaxPssiblePressure = value; }
         }
 
+        // AddAit to the current Wheel 
         // Throws ValueOutOfRangeException
         public void AddAir(float airPressureToAdd)
         {

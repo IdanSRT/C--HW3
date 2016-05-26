@@ -34,8 +34,7 @@ namespace Ex03.GarageLogic
         public eEnergyType m_EngineEnergyType;
         public float m_MaxEnergy;
 
-        // To Do
-        // delete all unnessecary fields in Class Vehicle 
+        // Constructor
         public Vehicle
             (string i_ModelName, string i_LisenseNum, float i_EnergyLeft, List<Wheel> i_WeelsList, eEnergyType i_EnergyType, float i_MaxEnergy)
         {
@@ -46,42 +45,50 @@ namespace Ex03.GarageLogic
             m_EngineEnergyType = i_EnergyType;
             m_MaxEnergy = i_MaxEnergy;
         }
- 
+
+        // EnergyLeft getter / setter
         public float EnergyLeft
         {
             get { return m_EnergyLeft; }
             set { m_EnergyLeft = value; }
         }
-        
+
+        // LisenceNum getter / setter
         public string LisenceNum
         {
             get { return m_LisenseNum; }
             set { m_LisenseNum = value; }
         }
 
+        // ModelName getter / setter
         public string ModelName
         {
             get { return m_ModelName; }
             set { m_ModelName = value; }
         }
 
+        // WheelsList getter / setter
         public List<Wheel> WheelsList
         {
             get { return m_WheelsList; }
             set { m_WheelsList = value; }
         }
 
+        // EngineEnergyType getter / setter
         public virtual eEnergyType EngineEnergyType
         {
             get { return m_EngineEnergyType; }
             set { m_EngineEnergyType = value; }
         }
+
+        // MaxEnergy getter / setter
         public float MaxEnergy
         {
             get { return m_MaxEnergy; }
             set { m_MaxEnergy = value; }
         }
 
+        // AddEnergy - Fule or Electricity
         public void  AddEnergy(eEnergyType i_EnergyTypeToAdd, float i_EnergyAmountToAdd)
         {
             if (this.EngineEnergyType == i_EnergyTypeToAdd)
