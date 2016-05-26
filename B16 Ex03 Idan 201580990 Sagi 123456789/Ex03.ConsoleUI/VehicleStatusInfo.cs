@@ -82,7 +82,7 @@ namespace Ex03.ConsoleUI
             m_VehicleOwnerName = i_VehicleOwnerName;
             m_VehicleOwnerPhone = i_VehicleOwnerPhone;
             m_VehicleStatus = eVehicleStatus.InRepair;
-            m_Vehicle = i_Vehicle.;
+            m_Vehicle = i_Vehicle;
         }
         public String VehicleOwnerName
         {
