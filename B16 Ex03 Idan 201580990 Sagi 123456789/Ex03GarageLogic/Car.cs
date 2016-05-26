@@ -11,7 +11,8 @@ namespace Ex03.GarageLogic
         Yellow,
         White,
         Red,
-        Black
+        Black,
+        Other
     }
     public class Car : Vehicle
     {
