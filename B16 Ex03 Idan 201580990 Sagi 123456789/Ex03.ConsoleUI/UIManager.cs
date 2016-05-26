@@ -171,10 +171,10 @@ namespace Ex03.ConsoleUI
             string vehicleOwnerName = GetVehicleOwnerName();
             string vehicleOwnerPhone = GetVehicleOwnerPhone();
             string modelName = GetVehicleModleName();
-            eEnergyType energyType = getEnergyInput();
-            float maxEnergy = GetMaxEnergy;
+            eEnergyType energyType = getEnergyInput(vehicleType);
+            float maxEnergy = GetMaxEnergy(vehicleType);
             float energyLeft = ChooseNumOf("energy Left in the vehicle (float)", 0, maxEnergy);
-            List<Wheel> wheelList = GetWheelList();
+            List<Wheel> wheelList = GetWheelList(vehicleType);
             Vehicle newVehicle;
             switch (vehicleType)
             {
@@ -210,6 +210,34 @@ namespace Ex03.ConsoleUI
 
             VehicleStatusInfo newVehicleStatusInfo = new VehicleStatusInfo(i_LicenseNumber, vehicleOwnerName, vehicleOwnerPhone, newVehicle);
             return newVehicleStatusInfo;
+        }
+
+        // Auto choose max energy.
+        private float GetMaxEnergy(eVehicleType i_VehicleType)
+        {
+            float maxEnergy;
+            switch (i_VehicleType)
+            {
+                case eVehicleType.MotoricBike:
+                    maxEnergy = 7.2F;
+                    break;
+                case eVehicleType.ElecticBike:
+                    maxEnergy = 1.9F;
+                    break;
+                case eVehicleType.MotoricCar:
+                    maxEnergy = 38F;
+                    break;
+                case eVehicleType.ElectricCar:
+                    maxEnergy = 3.3F;
+                    break;
+                case eVehicleType.Truck:
+                    maxEnergy = 135F;
+                    break;
+                default:
+                    maxEnergy = ChooseNumOf("maximum fuel/ battery time");
+                    break;
+            }
+            return maxEnergy;
         }
 
         // Check with the user if the truck is dangerouse.
@@ -318,7 +346,7 @@ namespace Ex03.ConsoleUI
             // Check if its not empty vehicle model name string
             while (inputModelName == string.Empty)
             {
-                Console.WriteLine("Please type the vehicle owner name");
+                Console.WriteLine("Please type the vehicle model name");
                 inputModelName = Console.ReadLine();
             }
 
@@ -367,7 +395,8 @@ namespace Ex03.ConsoleUI
             int counter = 1;
             foreach (eVehicleType vehicleType in eVehicleType.GetValues(typeof(eVehicleType)))
             {
-                Console.WriteLine((counter + 1) + ")" + vehicleType);
+                Console.WriteLine(counter + ")" + vehicleType);
+                counter++;
             }
 
             switch (inputVehicleType)
@@ -396,16 +425,16 @@ namespace Ex03.ConsoleUI
         }
 
         // Adding wheels information from user
-        private List<Wheel> GetWheelList()
+        private List<Wheel> GetWheelList(eVehicleType i_VehicleType)
         {
             List<Wheel> newWheelList = new List<Wheel>();
-            float inputNumberOfWheels;
-            inputNumberOfWheels = ChooseNumOf("number of wheels of the vehicle");
+            float inputNumberOfWheels = NumOfWheels(i_VehicleType);
+
             for (int numOfWheel = 0; numOfWheel < inputNumberOfWheels; numOfWheel++)
             {
                 Console.WriteLine("Wheel No." + (numOfWheel + 1) + " :");
 
-                float inputMaxPossiblePressure;
+                float inputMaxPossiblePressure = MaxPossiblePressure(i_VehicleType);
                 string inputWheelManufacture = string.Empty;
                 float inputAirPressure;
 
@@ -423,42 +452,94 @@ namespace Ex03.ConsoleUI
                 Wheel newWheel = new Wheel(inputWheelManufacture, inputAirPressure, inputMaxPossiblePressure);
                 newWheelList.Add(newWheel);
             }
-
             return newWheelList;
         }
 
-        // Helper to get energy type from the user.
-        private eEnergyType getEnergyInput()
+        // Get number of wheels for the vehicle by the type 
+        private int NumOfWheels(eVehicleType i_VehicleType)
         {
-            Console.WriteLine("What energy type your vehicle use from the list, in case of other type just it's name:"
-                + "\n -Electricity- -Octan95- -Octan96- -Octan98- -Soler- ");
-            string inputEnergyTypeStr = Console.ReadLine();
-            eEnergyType newEnergyType;
-           
-            switch (inputEnergyTypeStr)
+            int numOfWheels;
+            switch (i_VehicleType)
             {
-                case "Electricity":
-                    newEnergyType = eEnergyType.Electricity;
+                case eVehicleType.MotoricBike:
+                    numOfWheels = 2;
                     break;
-                case "Octan95":
+                case eVehicleType.ElecticBike:
+                    numOfWheels = 2;
+                    break;
+                case eVehicleType.MotoricCar:
+                    numOfWheels = 4;
+                    break;
+                case eVehicleType.ElectricCar:
+                    numOfWheels = 4;
+                    break;
+                case eVehicleType.Truck:
+                    numOfWheels = 16;
+                    break;
+                default:
+                    numOfWheels = (int)(ChooseNumOf("number of wheels (int)"));
+                    break;
+            }
+            return numOfWheels;
+        }
+
+        // Get maximum air pressure in wheel by vehicle type.
+        private float MaxPossiblePressure(eVehicleType i_VehicleType)
+        {
+            float maxAirPressureInWheel;
+            switch (i_VehicleType)
+            {
+                case eVehicleType.MotoricBike:
+                    maxAirPressureInWheel = 31;
+                    break;
+                case eVehicleType.ElecticBike:
+                    maxAirPressureInWheel = 31F;
+                    break;
+                case eVehicleType.MotoricCar:
+                    maxAirPressureInWheel = 30F;
+                    break;
+                case eVehicleType.ElectricCar:
+                    maxAirPressureInWheel = 30F;
+                    break;
+                case eVehicleType.Truck:
+                    maxAirPressureInWheel = 28F;
+                    break;
+                default:
+                    maxAirPressureInWheel = ChooseNumOf("maximum air pressure in wheel (float)");
+                    break;
+            }
+            return maxAirPressureInWheel;
+        }
+
+        // Helper to get energy type by vehicle type.
+        private eEnergyType getEnergyInput(eVehicleType i_VehicleType)
+        {
+            eEnergyType newEnergyType;
+
+            switch (i_VehicleType)
+            {
+                case eVehicleType.MotoricBike:
                     newEnergyType = eEnergyType.Octan95;
                     break;
-                case "Octan96":
-                    newEnergyType = eEnergyType.Octan96;
+                case eVehicleType.ElecticBike:
+                    newEnergyType = eEnergyType.Electricity;
                     break;
-                case "Octan98":
+                case eVehicleType.MotoricCar:
                     newEnergyType = eEnergyType.Octan98;
                     break;
-                case "Soler":
+                case eVehicleType.ElectricCar:
+                    newEnergyType = eEnergyType.Electricity;
+                    break;
+                case eVehicleType.Truck:
                     newEnergyType = eEnergyType.Soler;
                     break;
-                default: // In case of new type of energy which still not implemented.
+                default:
                     newEnergyType = eEnergyType.DeFault;
                     break;
             }
-
             return newEnergyType;
         }
+
 
         // UI for choosing one of the option in the serice enum list.
         public static eService ServiceOptionChoose(List<Service> i_ServiceList)
