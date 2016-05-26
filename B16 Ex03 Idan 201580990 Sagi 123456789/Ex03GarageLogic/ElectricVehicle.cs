@@ -22,7 +22,6 @@
 //            set { m_MaxEnergy = value; }
 //        }
         
-	
 //        public float BatteryHours
 //        {   
 //            get { return m_EnergyLeft;}

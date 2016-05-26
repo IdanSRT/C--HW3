@@ -15,6 +15,7 @@ namespace Ex03.GarageLogic
         Electricity,
         DeFault
     }
+
     public enum eVehicleType
     {
         MotoricCar,
@@ -35,8 +36,13 @@ namespace Ex03.GarageLogic
         public float m_MaxEnergy;
 
         // Constructor
-        public Vehicle
-            (string i_ModelName, string i_LisenseNum, float i_EnergyLeft, List<Wheel> i_WeelsList, eEnergyType i_EnergyType, float i_MaxEnergy)
+        public Vehicle(
+            string i_ModelName,
+            string i_LisenseNum,
+            float i_EnergyLeft,
+            List<Wheel> i_WeelsList,
+            eEnergyType i_EnergyType,
+            float i_MaxEnergy)
         {
             m_ModelName = i_ModelName;
             m_LisenseNum = i_LisenseNum;
@@ -89,7 +95,7 @@ namespace Ex03.GarageLogic
         }
 
         // AddEnergy - Fule or Electricity
-        public void  AddEnergy(eEnergyType i_EnergyTypeToAdd, float i_EnergyAmountToAdd)
+        public void AddEnergy(eEnergyType i_EnergyTypeToAdd, float i_EnergyAmountToAdd)
         {
             if (this.EngineEnergyType == i_EnergyTypeToAdd)
             {
