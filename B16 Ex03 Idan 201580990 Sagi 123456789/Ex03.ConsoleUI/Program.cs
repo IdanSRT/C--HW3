@@ -13,8 +13,9 @@ namespace Ex03.ConsoleUI
             
             UIManager newUIManager = new UIManager();
             newUIManager.StartService();
-            Console.ReadLine();
 
+
+            Console.ReadLine();
         }
 
     }

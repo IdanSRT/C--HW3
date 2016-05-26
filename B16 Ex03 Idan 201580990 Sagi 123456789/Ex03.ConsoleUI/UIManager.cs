@@ -449,11 +449,11 @@ namespace Ex03.ConsoleUI
         public static eService ServiceOptionChoose(List<Service> i_ServiceList)
         {
             Console.WriteLine("Hello dear custumer and thanks for coming to our humble garage. \nPlease choose one of the following options:");
-            for (int service = 1; service < i_ServiceList.Count; service++)
+            for (int service = 0; service < i_ServiceList.Count; service++)
             {
-                Console.WriteLine(service + ") " + i_ServiceList[service].ServiceString);
+                Console.WriteLine((service + 1) + ") " + i_ServiceList[service].ServiceString);
             }
-
+            Console.WriteLine((i_ServiceList.Count + 1) + ") Finish");
             string inputNumStr = Console.ReadLine();
             int inputServiceNumInt;
             bool goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);

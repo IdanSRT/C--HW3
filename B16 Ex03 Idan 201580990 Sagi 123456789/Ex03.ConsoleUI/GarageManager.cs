@@ -33,6 +33,7 @@ namespace Ex03.ConsoleUI
         {
             m_VehiclesList = new List<VehicleStatusInfo>();
             m_NumberOfVehicles = 0;
+            m_ServiceList = new List<Service>();
             m_ServiceList.Add(new Service(("Enter a new car for repairing in the garage."), eService.AddVehical));
             m_ServiceList.Add(new Service(("Print vehicle List in the Garage."), eService.PrintVehicalList));
             m_ServiceList.Add(new Service(("Update vehicle status in the garage."), eService.UpdateVehicleStatus));
