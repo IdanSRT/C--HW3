@@ -398,6 +398,7 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine(counter + ")" + vehicleType);
                 counter++;
             }
+            inputVehicleType = Console.ReadLine();
 
             switch (inputVehicleType)
             {
@@ -438,7 +439,7 @@ namespace Ex03.ConsoleUI
                 string inputWheelManufacture = string.Empty;
                 float inputAirPressure;
 
-                inputMaxPossiblePressure = ChooseNumOf("max possible air pressoure in wheel (float)");
+                inputMaxPossiblePressure = MaxPossiblePressure(i_VehicleType);
 
                 // Check if its not empty  wheel manufacture name string                   
                 while (inputWheelManufacture == string.Empty)
