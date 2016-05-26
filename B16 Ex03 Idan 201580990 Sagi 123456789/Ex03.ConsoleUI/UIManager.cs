@@ -19,7 +19,7 @@ namespace Ex03.ConsoleUI
     {
         private GarageManager m_GarageManager;
 
-        //constractor for UIManager.
+        // Constractor for UIManager.
         public UIManager()
         {
             m_GarageManager = new GarageManager();
@@ -76,7 +76,7 @@ namespace Ex03.ConsoleUI
                 }
             }
         }
-        //printing vehicle info
+        // Printing vehicle info
         private static void PrintVehicleInfo(GarageManager i_GarageManager)
         {
             string VehicleLicenseNum = getNewLicenseNum();
@@ -93,7 +93,7 @@ namespace Ex03.ConsoleUI
             
         }
 
-        //update the vehicle Status;
+        // Update the vehicle Status;
         private static void UpdateVehicleStatus(GarageManager i_GarageManager)
         {
             string VehicleLicenseNum = getNewLicenseNum();
@@ -125,7 +125,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        //helper for printing vehicle list.
+        // Helper for printing vehicle list.
         private  static void PrintVehicleList(GarageManager i_GarageManager)
         {
             Console.WriteLine("choose what vehicle list you wish to print:\n" +
@@ -148,7 +148,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        //geting the license number from the user.
+        // Geting the license number from the user.
         private static string getNewLicenseNum()
         {
             string licenseNumber = "";
@@ -171,7 +171,7 @@ namespace Ex03.ConsoleUI
             string vehicleOwnerPhone = GetVehicleOwnerPhone();
             string modelName = GetVehicleModleName();
             eEnergyType energyType = getEnergyInput();
-            float maxEnergy = ChooseNumOf("max energy of the vehicle (float)");
+            float maxEnergy = GetMaxEnergy
             float energyLeft = ChooseNumOf("energy Left in the vehicle (float)", 0, maxEnergy);
             List<Wheel> wheelList = GetWheelList();
             Vehicle newVehicle;
@@ -210,7 +210,7 @@ namespace Ex03.ConsoleUI
             return newVehicleStatusInfo;
         }
 
-        //check with the user if the truck is dangerouse.
+        // Check with the user if the truck is dangerouse.
         private bool IsDangerouse()
         {
             Console.WriteLine("Does the truck contain dangerouse metirials ? (Y/N)");
@@ -235,14 +235,14 @@ namespace Ex03.ConsoleUI
             return IsDangerouse;
         }
 
-        //get the engine capasitiy for the user.
+        // Get the engine capasitiy for the user.
         private int GetEngineCapacity()
         {
             int inputEngineCapacity = (int)ChooseNumOf("engine capacity");
             return inputEngineCapacity;
         }
 
-        //get the license size from the user.
+        // Get the license size from the user.
         private eLisenceSize GetLicenseSize()
         {
             eLisenceSize licenseSize = eLisenceSize.Other;
@@ -270,14 +270,14 @@ namespace Ex03.ConsoleUI
             return licenseSize;
         }
 
-        //get number of doors of the car from the user.
+        // Get number of doors of the car from the user.
         private int GetNumOfDoors()
         {
             int inputNumOfDoors = (int)ChooseNumOf("number of doors for the car (2-5)");
             return inputNumOfDoors;
         }
         
-        //get car color from the user.
+        // Get car color from the user.
         private eColor GetColor()
         {
             eColor inputColor= eColor.Other;
@@ -305,7 +305,7 @@ namespace Ex03.ConsoleUI
             return inputColor;
         }
 
-        //geting vehicle model name from the user.
+        // Geting vehicle model name from the user.
         private string GetVehicleModleName()
         {
             string inputModelName = "";
@@ -318,7 +318,7 @@ namespace Ex03.ConsoleUI
             return inputModelName;
         }
         
-        //geting vehicle owner phone number from the user.
+        //Geting vehicle owner phone number from the user.
         private string GetVehicleOwnerPhone()
         {
             string inputVehicleOwnerPhoneStr = "";
@@ -334,7 +334,7 @@ namespace Ex03.ConsoleUI
             return inputVehicleOwnerPhoneStr;
         }
 
-        //geting vehicle owner name for the user.
+        // Geting vehicle owner name for the user.
         private string GetVehicleOwnerName()
         {
             string inputVehicleOwnerNameStr = "";
@@ -347,7 +347,7 @@ namespace Ex03.ConsoleUI
             return inputVehicleOwnerNameStr;
         }
 
-        //geting the vehicle type from the user.
+        // Geting the vehicle type from the user.
         private eVehicleType GetVehicleType()
         {
             eVehicleType newVehicleType;
@@ -382,7 +382,7 @@ namespace Ex03.ConsoleUI
             return newVehicleType;
         }
 
-        //adding wheels information from user
+        // Adding wheels information from user
         private List<Wheel> GetWheelList()
         {
             List<Wheel> newWheelList = new List<Wheel>();
@@ -413,7 +413,7 @@ namespace Ex03.ConsoleUI
             return newWheelList;
         }
 
-        //helper to get energy type from the user.
+        // Helper to get energy type from the user.
         private eEnergyType getEnergyInput()
         {
             Console.WriteLine("What energy type your vehicle use from the list, in case of other type just it's name:"
@@ -445,7 +445,7 @@ namespace Ex03.ConsoleUI
             return newEnergyType;
         }
 
-        //UI for choosing one of the option in the serice enum list.
+        // UI for choosing one of the option in the serice enum list.
         public static eService ServiceOptionChoose(List<Service> i_ServiceList)
         {
             for (int service = 0; service < i_ServiceList.Count; service++)
@@ -456,16 +456,16 @@ namespace Ex03.ConsoleUI
             string inputNumStr = Console.ReadLine();
             int inputServiceNumInt;
             bool goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);
-            while (!goodInput || inputServiceNumInt < 1 || inputServiceNumInt > i_ServiceList.Count)
+            while (!goodInput || inputServiceNumInt < 1 || inputServiceNumInt > (i_ServiceList.Count + 1))
             {
-                Console.WriteLine("Input is not valid. \nPlease choose a service number between the range " + 1 + " to " + i_ServiceList.Count + ":");
+                Console.WriteLine("Input is not valid. \nPlease choose a service number between the range " + 1 + " to " + (i_ServiceList.Count + 1) + ":");
                 inputNumStr = Console.ReadLine();
                 goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);
             }
-            return (eService)inputServiceNumInt;
+            return (eService)(inputServiceNumInt - 1);
         }
 
-        //helper to for taking floats input from user from a range of numbers.
+        // Helper to for taking floats input from user from a range of numbers.
         public static float ChooseNumOf(string numToChoose, float startRange, float endRange)
         {
             System.Console.WriteLine("Please choose the number of " + numToChoose + ", between the range " + startRange + " to " + endRange + " (and then press 'enter'):");
@@ -482,7 +482,7 @@ namespace Ex03.ConsoleUI
             return inputNumFloat;
         }
 
-        //helper to for taking floats input from user.
+        // Helper to for taking floats input from user.
         public static float ChooseNumOf(string numToChoose)
         {
             System.Console.WriteLine("Please choose the number of " + numToChoose + " :");
