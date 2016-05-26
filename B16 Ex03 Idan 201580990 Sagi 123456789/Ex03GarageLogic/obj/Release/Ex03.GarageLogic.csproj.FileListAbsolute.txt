@@ -1,4 +1,0 @@
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03GarageLogic\bin\Release\Ex03.GarageLogic.dll
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03GarageLogic\bin\Release\Ex03.GarageLogic.pdb
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03GarageLogic\obj\Release\Ex03.GarageLogic.dll
-C:\Users\Sagi\Desktop\CS HW3\B16 Ex03 Idan 201580990 Sagi 123456789\Ex03GarageLogic\obj\Release\Ex03.GarageLogic.pdb
