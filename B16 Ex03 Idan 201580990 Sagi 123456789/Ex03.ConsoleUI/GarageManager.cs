@@ -115,17 +115,17 @@ namespace Ex03.ConsoleUI
         public void PrintVehicleInfo(string i_LicenseNumber)
         {
             VehicleStatusInfo vehicleStatusInfo = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)];
-            WriteLine<Vehicle>(vehicleStatusInfo.Vehicle);
-            /*Console.WriteLine("Information and status:");
-            Console.WriteLine("Vehicle license NO." + i_LicenseNumber);
-            Console.WriteLine("Vehicle model :" + vehicleStatusInfo.Vehicle.m_ModelName);
-            Console.WriteLine("Vehicle owner name :" + vehicleStatusInfo.VehicleOwnerName);
-            Console.WriteLine("Vehicle status in the Garage :" + vehicleStatusInfo.VehicleStatus);
-            Console.WriteLine("Vehicle wheels air pressure :" + vehicleStatusInfo.Vehicle.WheelsList[1].AirPressure);
-            Console.WriteLine("Vehicle wheels manufacturer :" + vehicleStatusInfo.Vehicle.WheelsList[1].Manufacture);
-            Console.WriteLine("Vehicle energy type :" + vehicleStatusInfo.Vehicle.m_EngineEnergyType);
-            Console.WriteLine("Vehicle energy Status :" + vehicleStatusInfo.Vehicle.m_EnergyLeft);
-            */
+            //WriteLine<Vehicle>(vehicleStatusInfo.Vehicle);
+            //Console.WriteLine("Information and status:");
+            //Console.WriteLine("Vehicle license NO." + i_LicenseNumber);
+            //Console.WriteLine("Vehicle model :" + vehicleStatusInfo.Vehicle.m_ModelName);
+            //Console.WriteLine("Vehicle owner name :" + vehicleStatusInfo.VehicleOwnerName);
+            //Console.WriteLine("Vehicle status in the Garage :" + vehicleStatusInfo.VehicleStatus);
+            //Console.WriteLine("Vehicle wheels air pressure :" + vehicleStatusInfo.Vehicle.WheelsList[1].AirPressure);
+            //Console.WriteLine("Vehicle wheels manufacturer :" + vehicleStatusInfo.Vehicle.WheelsList[1].Manufacture);
+            //Console.WriteLine("Vehicle energy type :" + vehicleStatusInfo.Vehicle.m_EngineEnergyType);
+            //Console.WriteLine("Vehicle energy Status :" + vehicleStatusInfo.Vehicle.m_EnergyLeft);
+            
             
         }
 
@@ -144,18 +144,18 @@ namespace Ex03.ConsoleUI
         }
         
         //Helper for printing
-        public static void WriteLine<T>(T obj)
-        {
-            var t = typeof(T);
-            var props = t.GetProperties();
-            StringBuilder sb = new StringBuilder();
-            foreach (var item in props)
-            {
-                sb.Append($"{item.Name}:{item.GetValue(obj, null)}; ");
-            }
-            sb.AppendLine();
-            Console.WriteLine(sb.ToString());
-        }
+        //public static void WriteLine<T>(T obj)
+        //{
+        //    var t = typeof(T);
+        //    var props = t.GetProperties();
+        //    StringBuilder sb = new StringBuilder();
+        //    foreach (var item in props)
+        //    {
+        //        sb.Append($"{item.Name}:{item.GetValue(obj, null)}; ");
+        //    }
+        //    sb.AppendLine();
+        //    Console.WriteLine(sb.ToString());
+        //}
         
     }
 }
