@@ -91,11 +91,11 @@ namespace Ex03.ConsoleUI
         //(4) Fill air in wheels.
         public void FillAir(string i_LicenseNumber)
         {
-            float vehicleWheelMaxAirPressire = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList[1].MaxPossiblePressure;
-             List<Wheel> vehicleWheels = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList;
-            foreach (Wheel wheel in vehicleWheels)
+             List<Wheel> vehicleWheelsList = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList;
+            foreach (Wheel currWheel in vehicleWheelsList)
             {
-                wheel.AddAir(vehicleWheelMaxAirPressire);
+                float currWheelAirPressureToAdd = currWheel.MaxPossiblePressure - currWheel.AirPressure;
+                currWheel.AddAir(currWheelAirPressureToAdd);
             }
         }
       
