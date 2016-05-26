@@ -23,7 +23,8 @@ namespace Ex03.ConsoleUI
         {
             m_GarageManager = new GarageManager();
         }
-
+        
+        // The main method that run our garage
         public void StartService()
         {
             GarageManager newGarageManager = this.m_GarageManager;
@@ -34,13 +35,13 @@ namespace Ex03.ConsoleUI
                 eService serviceOptionChoose = ServiceOptionChoose(newGarageManager.m_ServiceList);
                 switch (serviceOptionChoose)
                 {
-                    case eService.AddVehical: // 1 
+                    case eService.AddVehical: 
                         string VehicleLicenseNum = getNewLicenseNum();
                         int indexOnList = newGarageManager.IndexOfVehicle(VehicleLicenseNum);
                         if (indexOnList != -1)
                         {
-                            Console.WriteLine("Vehicle L.N " + VehicleLicenseNum +
-                        " is allready in the garage and his status is " + newGarageManager.VehicleList[indexOnList].VehicleStatus);
+                            Console.WriteLine("Vehicle L.N " + VehicleLicenseNum + 
+                                " is allready in the garage and his status is " + newGarageManager.VehicleList[indexOnList].VehicleStatus);
                         }
                         else
                         {
@@ -74,6 +75,7 @@ namespace Ex03.ConsoleUI
                         Console.WriteLine("Please choose a valide option from our service");
                         break;
                 }
+                Console.WriteLine("\n\n");
             }
         }
 
@@ -158,9 +160,8 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine("Please enter a valide vehicle license number");
                 inputLicenseNumberStr = Console.ReadLine();
-                licenseNumber = inputLicenseNumberStr;
             }
-
+            licenseNumber = inputLicenseNumberStr;
             return licenseNumber;
         }
 
@@ -545,12 +546,13 @@ namespace Ex03.ConsoleUI
         // UI for choosing one of the option in the serice enum list.
         public static eService ServiceOptionChoose(List<Service> i_ServiceList)
         {
+            Console.WriteLine("Please choose one of the following options:");
             for (int service = 0; service < i_ServiceList.Count; service++)
             {
                 Console.WriteLine((service + 1) + ") " + i_ServiceList[service].ServiceString);
             }
 
-            Console.WriteLine((i_ServiceList.Count + 1) + ") Finish");
+            Console.WriteLine((i_ServiceList.Count + 1) + ") Finish\n");
             string inputNumStr = Console.ReadLine();
             int inputServiceNumInt;
             bool goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);
