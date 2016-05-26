@@ -72,15 +72,16 @@ namespace Ex03.ConsoleUI
         {
             m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].VehicleStatus = i_VehicleStatus;
         }
-
+        
+        //To Do Idan
         //(4) Fill air in wheels.
         public void FillAir(string i_LicenseNumber)
         {
-            float vehicleWheelMaxAirPressire = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList[1].MaxPossiblePressure;
-             List<Wheel> vehicleWheels = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList;
-            foreach (Wheel wheel in vehicleWheels)
+            List<Wheel> vehicleWheelsList = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle.WheelsList;
+            foreach (Wheel wheel in vehicleWheelsList)
             {
-                wheel.AddAir(vehicleWheelMaxAirPressire);
+                float amountOfAirToAdd = wheel.MaxPossiblePressure - wheel.AirPressure;
+                wheel.AddAir(amountOfAirToAdd);
             }
         }
       
