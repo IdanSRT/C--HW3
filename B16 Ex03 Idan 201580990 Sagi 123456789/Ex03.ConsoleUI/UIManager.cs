@@ -65,7 +65,7 @@ namespace Ex03.ConsoleUI
                     Console.WriteLine("option 6 was picked");
                     break;
                 case eService.PrintVehicleInfo:
-                    Console.WriteLine("option 7 was picked");
+                    PrintVehicleInfo();
                     break;
                 case eService.Done:
                     Console.WriteLine("Thanks for using our service, have a nice day and good bye!");
