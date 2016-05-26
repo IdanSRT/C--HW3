@@ -11,7 +11,8 @@ namespace Ex03.ConsoleUI
         public static void Main()
         {
             GarageManager newGarageManager = new GarageManager();
-            UIManager.StartService();
+            UIManager newUIManager = new UIManager(newGarageManager);
+            newUIManager.StartService()
             Console.ReadLine();
 
         }

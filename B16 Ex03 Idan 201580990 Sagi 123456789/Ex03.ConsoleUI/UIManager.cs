@@ -19,11 +19,17 @@ namespace Ex03.ConsoleUI
     {
         private GarageManager m_GarageManager;
 
+        //constractor for UIManager.
+        public UIManager(GarageManager i_GarageManager)
+        {
+            m_GarageManager = i_GarageManager;
+        }
+
         public void StartService()
         {
-            
+
             //setting the garage with is services.
-            GarageManager newGarageManager = new GarageManager();
+            GarageManager newGarageManager = this.m_GarageManager;
             newGarageManager.ServiceList.Add(new Service(("Enter a new car for repairing in the garage."), eService.AddVehical));
             newGarageManager.ServiceList.Add(new Service(("Print vehicle List in the Garage."), eService.PrintVehicalList));
             newGarageManager.ServiceList.Add(new Service(("Update vehicle status in the garage."), eService.UpdateVehicleStatus));
@@ -68,7 +74,7 @@ namespace Ex03.ConsoleUI
                         Console.WriteLine("option 6 was picked");
                         break;
                     case eService.PrintVehicleInfo:
-                        PrintVehicleInfo();
+                        PrintVehicleInfo(newGarageManager);
                         break;
                     case eService.Done:
                         Console.WriteLine("Thanks for using our service, have a nice day and good bye!");
