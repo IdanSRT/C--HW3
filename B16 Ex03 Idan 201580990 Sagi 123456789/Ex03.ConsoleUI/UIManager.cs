@@ -56,13 +56,34 @@ namespace Ex03.ConsoleUI
                         UpdateVehicleStatus(newGarageManager);
                         break;
                     case eService.FillAirInWheels:
-                        Console.WriteLine("option 4 was picked");
+                        newGarageManager.FillAir(getNewLicenseNum());
+                        Console.WriteLine("We filled your wheels with air !");
                         break;
                     case eService.FuelUpTank:
-                        Console.WriteLine("option 5 was picked");
+                        string licenseNumberForFuel = getNewLicenseNum();
+                        Vehicle vehicleToFuel = newGarageManager.VehicleList[newGarageManager.IndexOfVehicle(licenseNumberForFuel)].Vehicle;
+                        if (vehicleToFuel.EngineEnergyType != eEnergyType.Electricity)
+                        {
+                            newGarageManager.AddEnergy(licenseNumberForFuel);
+                            Console.WriteLine("We fueled your " + vehicleToFuel.GetType().Name + " to the maximum with " + vehicleToFuel.EngineEnergyType);
+                        }
+                        else
+                        {
+                            Console.Write("we are sorry but we cannot feul up a the vehicle with fuel since he use battery ! send him to charging.");
+                        }
                         break;
                     case eService.ChargeUpBattery:
-                        Console.WriteLine("option 6 was picked");
+                        string licenseNumberForCharge = getNewLicenseNum();
+                        Vehicle vehicleToCharge = newGarageManager.VehicleList[newGarageManager.IndexOfVehicle(licenseNumberForCharge)].Vehicle;
+                        if (vehicleToCharge.EngineEnergyType == eEnergyType.Electricity)
+                        {
+                            newGarageManager.AddEnergy(licenseNumberForCharge);
+                            Console.WriteLine("We Charged your " + vehicleToCharge.GetType().Name + " to the maximum with " + vehicleToCharge.EngineEnergyType);
+                        }
+                        else
+                        {
+                            Console.Write("we are sorry but we cannot Charge up a the motoric vehcile since he use Fuel ! send him to fueling tank.");
+                        }
                         break;
                     case eService.PrintVehicleInfo:
                         PrintVehicleInfo(newGarageManager);
@@ -131,7 +152,7 @@ namespace Ex03.ConsoleUI
         private static void PrintVehicleList(GarageManager i_GarageManager)
         {
             Console.WriteLine("choose what vehicle list you wish to print:\n" +
-                         "(1)In repair  " + "(2)Repaired  " + "(3)Payed  " + "(4)All-not filterd  ");
+                         "(1) In repair\t(2) Repaired\t(3) Payed\t(4) All-not filterd");
             string inputListStr = Console.ReadLine();
             switch (inputListStr)
             {
@@ -253,10 +274,12 @@ namespace Ex03.ConsoleUI
                 if ((inputIsDangerouse == "y") || (inputIsDangerouse == "Y"))
                 {
                     IsDangerouse = true;
+                    goodInput = true;
                 }
                 else if ((inputIsDangerouse == "n") || (inputIsDangerouse == "N"))
                 {
                     IsDangerouse = false;
+                    goodInput = true;
                 }
                 else
                 {

@@ -31,8 +31,8 @@ namespace Ex03.ConsoleUI
 
         public Vehicle Vehicle
         {
-            get { return Vehicle; }
-            set { Vehicle = value; }
+            get { return m_Vehicle; }
+            set { m_Vehicle = value; }
         }
 
         public eVehicleStatus VehicleStatus

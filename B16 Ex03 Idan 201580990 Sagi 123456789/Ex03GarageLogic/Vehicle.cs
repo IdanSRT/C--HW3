@@ -28,12 +28,12 @@ namespace Ex03.GarageLogic
 
     public class Vehicle
     {
-        public string m_ModelName;
         public string m_LisenseNum;
-        public float m_EnergyLeft;
-        public List<Wheel> m_WheelsList;
+        public string m_ModelName;
         public eEnergyType m_EngineEnergyType;
         public float m_MaxEnergy;
+        public float m_EnergyLeft;
+        public List<Wheel> m_WheelsList;
 
         // Constructor
         public Vehicle(
