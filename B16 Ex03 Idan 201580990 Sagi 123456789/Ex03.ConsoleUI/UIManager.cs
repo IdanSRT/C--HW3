@@ -56,33 +56,55 @@ namespace Ex03.ConsoleUI
                         UpdateVehicleStatus(newGarageManager);
                         break;
                     case eService.FillAirInWheels:
-                        newGarageManager.FillAir(getNewLicenseNum());
-                        Console.WriteLine("We filled your wheels with air !");
-                        break;
-                    case eService.FuelUpTank:
-                        string licenseNumberForFuel = getNewLicenseNum();
-                        Vehicle vehicleToFuel = newGarageManager.VehicleList[newGarageManager.IndexOfVehicle(licenseNumberForFuel)].Vehicle;
-                        if (vehicleToFuel.EngineEnergyType != eEnergyType.Electricity)
+                        string licenseOfVehicleToFillAir = getNewLicenseNum();
+                        if (newGarageManager.IsInGarage(licenseOfVehicleToFillAir))
                         {
-                            newGarageManager.AddEnergy(licenseNumberForFuel);
-                            Console.WriteLine("We fueled your " + vehicleToFuel.GetType().Name + " to the maximum with " + vehicleToFuel.EngineEnergyType);
+                            newGarageManager.FillAir(licenseOfVehicleToFillAir);
+                            Console.WriteLine("We filled your wheels with air !");
                         }
                         else
                         {
-                            Console.Write("we are sorry but we cannot feul up a the vehicle with fuel since he use battery ! send him to charging.");
+                            Console.WriteLine("No such vehicle in the garage with this License number");
+                        }
+                        break;
+                    case eService.FuelUpTank:
+                        string licenseNumberForFuel = getNewLicenseNum();
+                        if (newGarageManager.IsInGarage(licenseNumberForFuel))
+                        {
+                            Vehicle vehicleToFuel = newGarageManager.VehicleList[newGarageManager.IndexOfVehicle(licenseNumberForFuel)].Vehicle;
+                            if (vehicleToFuel.EngineEnergyType != eEnergyType.Electricity)
+                            {
+                                newGarageManager.AddEnergy(licenseNumberForFuel);
+                                Console.WriteLine("We fueled your " + vehicleToFuel.GetType().Name + " to the maximum with " + vehicleToFuel.EngineEnergyType);
+                            }
+                            else
+                            {
+                                Console.Write("we are sorry but we cannot feul up a the vehicle with fuel since he use battery ! send him to charging.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No such vehicle in the garage with this License number");
                         }
                         break;
                     case eService.ChargeUpBattery:
                         string licenseNumberForCharge = getNewLicenseNum();
-                        Vehicle vehicleToCharge = newGarageManager.VehicleList[newGarageManager.IndexOfVehicle(licenseNumberForCharge)].Vehicle;
-                        if (vehicleToCharge.EngineEnergyType == eEnergyType.Electricity)
+                        if (newGarageManager.IsInGarage(licenseNumberForCharge))
                         {
-                            newGarageManager.AddEnergy(licenseNumberForCharge);
-                            Console.WriteLine("We Charged your " + vehicleToCharge.GetType().Name + " to the maximum with " + vehicleToCharge.EngineEnergyType);
+                            Vehicle vehicleToCharge = newGarageManager.VehicleList[newGarageManager.IndexOfVehicle(licenseNumberForCharge)].Vehicle;
+                            if (vehicleToCharge.EngineEnergyType == eEnergyType.Electricity)
+                            {
+                                newGarageManager.AddEnergy(licenseNumberForCharge);
+                                Console.WriteLine("We Charged your " + vehicleToCharge.GetType().Name + " to the maximum with " + vehicleToCharge.EngineEnergyType);
+                            }
+                            else
+                            {
+                                Console.Write("we are sorry but we cannot Charge up a the motoric vehcile since he use Fuel ! send him to fueling tank.");
+                            }
                         }
                         else
                         {
-                            Console.Write("we are sorry but we cannot Charge up a the motoric vehcile since he use Fuel ! send him to fueling tank.");
+                            Console.WriteLine("No such vehicle in the garage with this License number");
                         }
                         break;
                     case eService.PrintVehicleInfo:
@@ -195,7 +217,7 @@ namespace Ex03.ConsoleUI
             string modelName = GetVehicleModleName();
             eEnergyType energyType = getEnergyInput(vehicleType);
             float maxEnergy = GetMaxEnergy(vehicleType);
-            float energyLeft = ChooseNumOf("energy Left in the vehicle (float)", 0, maxEnergy);
+            float energyLeft = ChooseNumOf( energyType + " Left in the vehicle (float)", 0, maxEnergy);
             List<Wheel> wheelList = GetWheelList(vehicleType);
             Vehicle newVehicle;
             switch (vehicleType)
@@ -256,7 +278,16 @@ namespace Ex03.ConsoleUI
                     maxEnergy = 135F;
                     break;
                 default:
-                    maxEnergy = ChooseNumOf("maximum fuel/ battery time");
+                    string energyType = string.Empty;
+                    if (i_VehicleType == eVehicleType.ElecticBike || i_VehicleType == eVehicleType.ElectricCar)
+                    {
+                        energyType = "battery time";
+                    }
+                    else
+                    {
+                        energyType = "maximum fuel capacity";
+                    }
+                    maxEnergy = ChooseNumOf(energyType);
                     break;
             }
             return maxEnergy;
@@ -329,7 +360,7 @@ namespace Ex03.ConsoleUI
         // Get number of doors of the car from the user.
         private int GetNumOfDoors()
         {
-            int inputNumOfDoors = (int)ChooseNumOf("number of doors for the car (2-5)");
+            int inputNumOfDoors = (int)ChooseNumOf("number of doors for the car ",2,5);
             return inputNumOfDoors;
         }
         

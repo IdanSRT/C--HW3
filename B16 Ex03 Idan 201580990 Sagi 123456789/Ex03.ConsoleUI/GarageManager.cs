@@ -52,6 +52,17 @@ namespace Ex03.ConsoleUI
             m_ServiceList = i_ServiceList;
         }
 
+        // Check if a vehicle with a given license number is in the garage
+        public bool IsInGarage(String i_LicenseNumbe)
+        {
+            bool inGarage = false;
+            if ( IndexOfVehicle(i_LicenseNumbe) != -1)
+            {
+                inGarage = true;
+            }
+            return inGarage;
+        }
+
         // (1) To add new vehicle to the garage and to check if he allready inside.
         public void AddVehicle(string i_LicenseNumber, string i_VehicleOwnerName, string i_VehicleOwnerPhone, Vehicle i_Vehicle)
         {
