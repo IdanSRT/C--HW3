@@ -132,7 +132,8 @@ namespace Ex03.ConsoleUI
             }
             catch (ValueOutOfRangeException voore)
             {
-                Console.WriteLine("Your " + currVehicle.GetType().Name + " has maximum amount capacity of " + vehicleEnergyType + " which is " + currVehicle.MaxEnergy + " try again with lower amount");
+                Console.WriteLine("Your " + currVehicle.GetType().Name + " has maximum amount capacity of " + vehicleEnergyType 
+                    + " of " + currVehicle.MaxEnergy + ".\nyour currnet amount is " + currVehicle.EnergyLeft + " try again with lower amount.");
             }
             
         }
