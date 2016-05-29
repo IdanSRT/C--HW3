@@ -126,11 +126,11 @@ namespace Ex03.ConsoleUI
                 currVehicle.AddEnergy(i_EnergyType, i_EnergyAmount);
                 Console.WriteLine("We added  to your " + currVehicle.GetType().Name + " " + currVehicle.EngineEnergyType  + " to the current value of " + currVehicle.EnergyLeft);
             }
-            catch (EnergyDoesNotMatchToEngine ednmte)
+            catch (EnergyDoesNotMatchToEngine)
             {
                 Console.WriteLine("Your " + currVehicle.GetType().Name + " do not use " + i_EnergyType + " try again using " + vehicleEnergyType);
             }
-            catch (ValueOutOfRangeException voore)
+            catch (ValueOutOfRangeException)
             {
                 Console.WriteLine("Your " + currVehicle.GetType().Name + " has maximum amount capacity of " + vehicleEnergyType + " which is " + currVehicle.MaxEnergy + " try again with lower amount");
             }
