@@ -23,7 +23,8 @@ namespace Ex03.ConsoleUI
         {
             m_GarageManager = new GarageManager();
         }
-
+        
+        // The main method that run our garage
         public void StartService()
         {
             GarageManager newGarageManager = this.m_GarageManager;
@@ -34,13 +35,13 @@ namespace Ex03.ConsoleUI
                 eService serviceOptionChoose = ServiceOptionChoose(newGarageManager.m_ServiceList);
                 switch (serviceOptionChoose)
                 {
-                    case eService.AddVehical: // 1 
+                    case eService.AddVehical: 
                         string VehicleLicenseNum = getNewLicenseNum();
                         int indexOnList = newGarageManager.IndexOfVehicle(VehicleLicenseNum);
                         if (indexOnList != -1)
                         {
-                            Console.WriteLine("Vehicle L.N " + VehicleLicenseNum +
-                        " is allready in the garage and his status is " + newGarageManager.VehicleList[indexOnList].VehicleStatus);
+                            Console.WriteLine("Vehicle L.N " + VehicleLicenseNum + 
+                                " is allready in the garage and his status is " + newGarageManager.VehicleList[indexOnList].VehicleStatus);
                         }
                         else
                         {
@@ -55,13 +56,56 @@ namespace Ex03.ConsoleUI
                         UpdateVehicleStatus(newGarageManager);
                         break;
                     case eService.FillAirInWheels:
-                        Console.WriteLine("option 4 was picked");
+                        string licenseOfVehicleToFillAir = getNewLicenseNum();
+                        if (newGarageManager.IsInGarage(licenseOfVehicleToFillAir))
+                        {
+                            newGarageManager.FillAir(licenseOfVehicleToFillAir);
+                            Console.WriteLine("We filled your wheels with air !");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No such vehicle in the garage with this License number");
+                        }
                         break;
                     case eService.FuelUpTank:
-                        Console.WriteLine("option 5 was picked");
+                        string licenseNumberForFuel = getNewLicenseNum();
+                        if (newGarageManager.IsInGarage(licenseNumberForFuel))
+                        {
+                            Vehicle vehicleToFuel = newGarageManager.VehicleList[newGarageManager.IndexOfVehicle(licenseNumberForFuel)].Vehicle;
+                            if (vehicleToFuel.EngineEnergyType != eEnergyType.Electricity)
+                            {
+                                newGarageManager.AddEnergy(licenseNumberForFuel);
+                                Console.WriteLine("We fueled your " + vehicleToFuel.GetType().Name + " to the maximum with " + vehicleToFuel.EngineEnergyType);
+                            }
+                            else
+                            {
+                                Console.Write("we are sorry but we cannot feul up a the vehicle with fuel since he use battery ! send him to charging.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No such vehicle in the garage with this License number");
+                        }
                         break;
                     case eService.ChargeUpBattery:
-                        Console.WriteLine("option 6 was picked");
+                        string licenseNumberForCharge = getNewLicenseNum();
+                        if (newGarageManager.IsInGarage(licenseNumberForCharge))
+                        {
+                            Vehicle vehicleToCharge = newGarageManager.VehicleList[newGarageManager.IndexOfVehicle(licenseNumberForCharge)].Vehicle;
+                            if (vehicleToCharge.EngineEnergyType == eEnergyType.Electricity)
+                            {
+                                newGarageManager.AddEnergy(licenseNumberForCharge);
+                                Console.WriteLine("We Charged your " + vehicleToCharge.GetType().Name + " to the maximum with " + vehicleToCharge.EngineEnergyType);
+                            }
+                            else
+                            {
+                                Console.Write("we are sorry but we cannot Charge up a the motoric vehcile since he use Fuel ! send him to fueling tank.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No such vehicle in the garage with this License number");
+                        }
                         break;
                     case eService.PrintVehicleInfo:
                         PrintVehicleInfo(newGarageManager);
@@ -74,6 +118,7 @@ namespace Ex03.ConsoleUI
                         Console.WriteLine("Please choose a valide option from our service");
                         break;
                 }
+                Console.WriteLine("\n\n");
             }
         }
 
@@ -129,7 +174,7 @@ namespace Ex03.ConsoleUI
         private static void PrintVehicleList(GarageManager i_GarageManager)
         {
             Console.WriteLine("choose what vehicle list you wish to print:\n" +
-                         "(1)In repair  " + "(2)Repaired  " + "(3)Payed  " + "(4)All-not filterd  ");
+                         "(1) In repair\t(2) Repaired\t(3) Payed\t(4) All-not filterd");
             string inputListStr = Console.ReadLine();
             switch (inputListStr)
             {
@@ -158,9 +203,8 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine("Please enter a valide vehicle license number");
                 inputLicenseNumberStr = Console.ReadLine();
-                licenseNumber = inputLicenseNumberStr;
             }
-
+            licenseNumber = inputLicenseNumberStr;
             return licenseNumber;
         }
 
@@ -173,7 +217,7 @@ namespace Ex03.ConsoleUI
             string modelName = GetVehicleModleName();
             eEnergyType energyType = getEnergyInput(vehicleType);
             float maxEnergy = GetMaxEnergy(vehicleType);
-            float energyLeft = ChooseNumOf("energy Left in the vehicle (float)", 0, maxEnergy);
+            float energyLeft = ChooseNumOf( energyType + " Left in the vehicle (float)", 0, maxEnergy);
             List<Wheel> wheelList = GetWheelList(vehicleType);
             Vehicle newVehicle;
             switch (vehicleType)
@@ -234,7 +278,16 @@ namespace Ex03.ConsoleUI
                     maxEnergy = 135F;
                     break;
                 default:
-                    maxEnergy = ChooseNumOf("maximum fuel/ battery time");
+                    string energyType = string.Empty;
+                    if (i_VehicleType == eVehicleType.ElecticBike || i_VehicleType == eVehicleType.ElectricCar)
+                    {
+                        energyType = "battery time";
+                    }
+                    else
+                    {
+                        energyType = "maximum fuel capacity";
+                    }
+                    maxEnergy = ChooseNumOf(energyType);
                     break;
             }
             return maxEnergy;
@@ -252,10 +305,12 @@ namespace Ex03.ConsoleUI
                 if ((inputIsDangerouse == "y") || (inputIsDangerouse == "Y"))
                 {
                     IsDangerouse = true;
+                    goodInput = true;
                 }
                 else if ((inputIsDangerouse == "n") || (inputIsDangerouse == "N"))
                 {
                     IsDangerouse = false;
+                    goodInput = true;
                 }
                 else
                 {
@@ -305,7 +360,7 @@ namespace Ex03.ConsoleUI
         // Get number of doors of the car from the user.
         private int GetNumOfDoors()
         {
-            int inputNumOfDoors = (int)ChooseNumOf("number of doors for the car (2-5)");
+            int inputNumOfDoors = (int)ChooseNumOf("number of doors for the car ",2,5);
             return inputNumOfDoors;
         }
         
@@ -444,11 +499,11 @@ namespace Ex03.ConsoleUI
                 // Check if its not empty  wheel manufacture name string                   
                 while (inputWheelManufacture == string.Empty)
                 {
-                    Console.WriteLine("Please type the wheel No." + numOfWheel + " manufacture name");
+                    Console.WriteLine("Please type the wheel No." + (numOfWheel + 1) + " manufacture name");
                     inputWheelManufacture = Console.ReadLine();
                 }
 
-                inputAirPressure = ChooseNumOf("air pressoure in wheel No." + numOfWheel + "(float)", 0, inputMaxPossiblePressure);
+                inputAirPressure = ChooseNumOf("air pressure in wheel No." + (numOfWheel + 1) + "(float)", 0, inputMaxPossiblePressure);
 
                 Wheel newWheel = new Wheel(inputWheelManufacture, inputAirPressure, inputMaxPossiblePressure);
                 newWheelList.Add(newWheel);
@@ -545,12 +600,13 @@ namespace Ex03.ConsoleUI
         // UI for choosing one of the option in the serice enum list.
         public static eService ServiceOptionChoose(List<Service> i_ServiceList)
         {
+            Console.WriteLine("Please choose one of the following options:");
             for (int service = 0; service < i_ServiceList.Count; service++)
             {
                 Console.WriteLine((service + 1) + ") " + i_ServiceList[service].ServiceString);
             }
 
-            Console.WriteLine((i_ServiceList.Count + 1) + ") Finish");
+            Console.WriteLine((i_ServiceList.Count + 1) + ") Finish\n");
             string inputNumStr = Console.ReadLine();
             int inputServiceNumInt;
             bool goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);

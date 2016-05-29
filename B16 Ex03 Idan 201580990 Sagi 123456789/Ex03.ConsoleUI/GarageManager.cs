@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 using Ex03.GarageLogic;
+using System.Collections;
 
 namespace Ex03.ConsoleUI
 {
@@ -50,6 +52,17 @@ namespace Ex03.ConsoleUI
             m_ServiceList = i_ServiceList;
         }
 
+        // Check if a vehicle with a given license number is in the garage
+        public bool IsInGarage(String i_LicenseNumbe)
+        {
+            bool inGarage = false;
+            if ( IndexOfVehicle(i_LicenseNumbe) != -1)
+            {
+                inGarage = true;
+            }
+            return inGarage;
+        }
+
         // (1) To add new vehicle to the garage and to check if he allready inside.
         public void AddVehicle(string i_LicenseNumber, string i_VehicleOwnerName, string i_VehicleOwnerPhone, Vehicle i_Vehicle)
         {
@@ -62,21 +75,25 @@ namespace Ex03.ConsoleUI
         public void PrintVehicleList()
         {
             Console.WriteLine("List of Vehicles in the garage:");
+            int counter = 1;
             foreach (VehicleStatusInfo vehicleStatusInfo in m_VehiclesList)
             {
-                Console.WriteLine(vehicleStatusInfo.LicenseNumber + ":" + vehicleStatusInfo.VehicleStatus);
+                Console.WriteLine(counter + ". " + vehicleStatusInfo.LicenseNumber);
+                counter++;
             }
         }
 
         // (2) Present filtered list of vehicles in the garage status.
         public void PrintFilteredVehicleList(eVehicleStatus i_VehicleStatus)
         {
-            Console.WriteLine("List of Vehicles in the garage filtered by the status" + i_VehicleStatus);
+            Console.WriteLine("List of Vehicles in the garage filtered by the status: " + i_VehicleStatus);
+            int counter = 1;
             foreach (VehicleStatusInfo vehicleStatusInfo in m_VehiclesList)
             {
                 if (vehicleStatusInfo.VehicleStatus == i_VehicleStatus)
                 {
-                    Console.WriteLine(vehicleStatusInfo.LicenseNumber + ":" + vehicleStatusInfo.VehicleStatus);
+                    Console.WriteLine(counter + ". " + vehicleStatusInfo.LicenseNumber);
+                    counter++;
                 }
             }
         }
@@ -104,24 +121,50 @@ namespace Ex03.ConsoleUI
         {
             Vehicle currVehicle = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle;
             eEnergyType vehicleEnergyType = currVehicle.m_EngineEnergyType;
-            float vehicleEnergyToAdd = currVehicle.EnergyLeft - currVehicle.MaxEnergy;
-            currVehicle.AddEnergy(vehicleEnergyType, vehicleEnergyToAdd);
+            if (vehicleEnergyType != eEnergyType.Electricity)
+            {
+                float vehicleEnergyToAdd = currVehicle.EnergyLeft - currVehicle.MaxEnergy;
+                currVehicle.AddEnergy(vehicleEnergyType, vehicleEnergyToAdd);
+            }
         }
 
-        //--(7)  Print vehicle information and status
+        // (7)  Print vehicle information and status using reflection(part of didnt work on wheels).
         public void PrintVehicleInfo(string i_LicenseNumber)
         {
-            VehicleStatusInfo vehicleStatusInfo = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)];
-            //WriteLine<Vehicle>(vehicleStatusInfo.Vehicle);
-            //Console.WriteLine("Information and status:");
-            //Console.WriteLine("Vehicle license NO." + i_LicenseNumber);
-            //Console.WriteLine("Vehicle model :" + vehicleStatusInfo.Vehicle.m_ModelName);
-            //Console.WriteLine("Vehicle owner name :" + vehicleStatusInfo.VehicleOwnerName);
-            //Console.WriteLine("Vehicle status in the Garage :" + vehicleStatusInfo.VehicleStatus);
-            //Console.WriteLine("Vehicle wheels air pressure :" + vehicleStatusInfo.Vehicle.WheelsList[1].AirPressure);
-            //Console.WriteLine("Vehicle wheels manufacturer :" + vehicleStatusInfo.Vehicle.WheelsList[1].Manufacture);
-            //Console.WriteLine("Vehicle energy type :" + vehicleStatusInfo.Vehicle.m_EngineEnergyType);
-            //Console.WriteLine("Vehicle energy Status :" + vehicleStatusInfo.Vehicle.m_EnergyLeft);
+
+            VehicleStatusInfo vehicleStatusInfo = this.VehicleList[IndexOfVehicle(i_LicenseNumber)];
+            Type  typeOfVehicleStatusInfo = vehicleStatusInfo.GetType();
+            FieldInfo[] fieldsOfVehicleStatusInfo = typeOfVehicleStatusInfo.GetFields();
+            Console.WriteLine(vehicleStatusInfo.Vehicle.GetType().Name + " full information and status:");
+            Console.WriteLine(" Vehicle Owner Name: " + vehicleStatusInfo.VehicleOwnerName);
+            Console.WriteLine(" Vehicle Owner Phone Number: " + vehicleStatusInfo.VehicleOwnerPhone);
+            Vehicle vehicle = vehicleStatusInfo.Vehicle;
+            FieldInfo[] fieldsOfVehicle = vehicle.GetType().GetFields();
+            foreach (FieldInfo field in fieldsOfVehicle)
+            {
+                if (field.Name.Equals("m_WheelsList"))
+                {
+                    int counter = 1;
+                    foreach (Wheel wheel in vehicle.WheelsList)
+                    {
+                        Console.WriteLine(" Wheel No." + counter + " information:");
+                        Console.WriteLine("  Manufacture:" + wheel.Manufacture);
+                        Console.WriteLine("  Max possible pressure:" + wheel.MaxPossiblePressure);
+                        Console.WriteLine("  Current air pressure:" + wheel.AirPressure);
+                        counter++;
+                        /*
+                        FieldInfo[] fieldsOfWheel = wheel.GetType().GetFields();
+                        foreach (FieldInfo wheelField in fieldsOfWheel)
+                        {
+                            Console.WriteLine("  " + wheelField.Name.Substring(2) + ":" + wheelField.GetValue(wheel));
+                        }*/
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(" " + field.Name.Substring(2) + ": " + field.GetValue(vehicle));
+                }
+            }
         }
 
         // Check if vehical allready in the garage and return its index on the vehicle status list, if not return -1.
@@ -138,19 +181,5 @@ namespace Ex03.ConsoleUI
 
             return VehicleIndexOnList;
         }
-        
-        //Helper for printing
-        //public static void WriteLine<T>(T obj)
-        //{
-        //    var t = typeof(T);
-        //    var props = t.GetProperties();
-        //    StringBuilder sb = new StringBuilder();
-        //    foreach (var item in props)
-        //    {
-        //        sb.Append($"{item.Name}:{item.GetValue(obj, null)}; ");
-        //    }
-        //    sb.AppendLine();
-        //    Console.WriteLine(sb.ToString());
-        //}
     }
 }
