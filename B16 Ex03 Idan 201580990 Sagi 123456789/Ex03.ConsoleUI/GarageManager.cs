@@ -4,11 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
-using Ex03.GarageLogic;
 using System.Collections;
+using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
+    public enum eStatus
+    {
+        InRepair,
+        Repaired,
+        Piad
+    }
+
     public class GarageManager
     {
         private List<VehicleStatusInfo> m_VehiclesList;
@@ -53,13 +60,14 @@ namespace Ex03.ConsoleUI
         }
 
         // Check if a vehicle with a given license number is in the garage
-        public bool IsInGarage(String i_LicenseNumbe)
+        public bool IsInGarage(string i_LicenseNumbe)
         {
             bool inGarage = false;
-            if ( IndexOfVehicle(i_LicenseNumbe) != -1)
+            if (IndexOfVehicle(i_LicenseNumbe) != -1)
             {
                 inGarage = true;
             }
+
             return inGarage;
         }
 
@@ -134,16 +142,14 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine("Your " + currVehicle.GetType().Name + " has maximum amount capacity of " + vehicleEnergyType 
                     + " of " + currVehicle.MaxEnergy + ".\nyour currnet amount is " + currVehicle.EnergyLeft + " try again with lower amount.");
-            }
-            
+            } 
         }
 
         // (7)  Print vehicle information and status using reflection(part of didnt work on wheels).
         public void PrintVehicleInfo(string i_LicenseNumber)
         {
-
             VehicleStatusInfo vehicleStatusInfo = this.VehicleList[IndexOfVehicle(i_LicenseNumber)];
-            Type  typeOfVehicleStatusInfo = vehicleStatusInfo.GetType();
+            Type typeOfVehicleStatusInfo = vehicleStatusInfo.GetType();
             FieldInfo[] fieldsOfVehicleStatusInfo = typeOfVehicleStatusInfo.GetFields();
             Console.WriteLine(vehicleStatusInfo.Vehicle.GetType().Name + " full information and status:");
             Console.WriteLine(" Vehicle Owner Name: " + vehicleStatusInfo.VehicleOwnerName);

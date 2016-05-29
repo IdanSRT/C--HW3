@@ -7,13 +7,6 @@ using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
-    public enum eStatus
-    {
-        InRepair,
-        Repaired,
-        Piad
-    }
-
     public class UIManager
     {
         private GarageManager m_GarageManager;
@@ -23,7 +16,64 @@ namespace Ex03.ConsoleUI
         {
             m_GarageManager = new GarageManager();
         }
-        
+
+        // UI for choosing one of the option in the serice enum list.
+        public static eService ServiceOptionChoose(List<Service> i_ServiceList)
+        {
+            Console.WriteLine("Please choose one of the following options:");
+            for (int service = 0; service < i_ServiceList.Count; service++)
+            {
+                Console.WriteLine((service + 1) + ") " + i_ServiceList[service].ServiceString);
+            }
+
+            Console.WriteLine((i_ServiceList.Count + 1) + ") Finish\n");
+            string inputNumStr = Console.ReadLine();
+            int inputServiceNumInt;
+            bool goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);
+            while (!goodInput || inputServiceNumInt < 1 || inputServiceNumInt > (i_ServiceList.Count + 1))
+            {
+                Console.WriteLine("Input is not valid. \nPlease choose a service number between the range " + 1 + " to " + (i_ServiceList.Count + 1) + ":");
+                inputNumStr = Console.ReadLine();
+                goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);
+            }
+
+            return (eService)(inputServiceNumInt - 1);
+        }
+
+        // Helper to for taking floats input from user from a range of numbers.
+        public static float ChooseNumOf(string numToChoose, float startRange, float endRange)
+        {
+            System.Console.WriteLine("Please choose the number of " + numToChoose + ", between the range " + startRange + " to " + endRange + " (and then press 'enter'):");
+            string inputNumStr = Console.ReadLine();
+            float inputNumFloat;
+            bool goodInput = float.TryParse(inputNumStr, out inputNumFloat);
+            while (!goodInput || inputNumFloat < startRange || inputNumFloat > endRange)
+            {
+                Console.WriteLine("Input is not valid. \nPlease choose a number between the range " + startRange + " to " + endRange + ":");
+                inputNumStr = Console.ReadLine();
+                goodInput = float.TryParse(inputNumStr, out inputNumFloat);
+            }
+
+            return inputNumFloat;
+        }
+
+        // Helper to for taking floats input from user.
+        public static float ChooseNumOf(string numToChoose)
+        {
+            System.Console.WriteLine("Please choose the number of " + numToChoose + " :");
+            string inputNumStr = Console.ReadLine();
+            float inputNumFloat;
+            bool goodInput = float.TryParse(inputNumStr, out inputNumFloat);
+            while (!goodInput)
+            {
+                Console.WriteLine("Input is not valid. \nPlease choose a valide " + numToChoose + " :");
+                inputNumStr = Console.ReadLine();
+                goodInput = float.TryParse(inputNumStr, out inputNumFloat);
+            }
+
+            return inputNumFloat;
+        }
+
         // The main method that run our garage
         public void StartService()
         {
@@ -66,6 +116,7 @@ namespace Ex03.ConsoleUI
                         {
                             Console.WriteLine("No such vehicle in the garage with this License number");
                         }
+
                         break;
                     case eService.FuelUpTank:
                         string licenseNumberForFuel = getNewLicenseNum();
@@ -87,6 +138,7 @@ namespace Ex03.ConsoleUI
                         {
                             Console.WriteLine("No such vehicle in the garage with this License number");
                         }
+
                         break;
                     case eService.ChargeUpBattery:
                         string licenseNumberForCharge = getNewLicenseNum();
@@ -108,6 +160,7 @@ namespace Ex03.ConsoleUI
                         {
                             Console.WriteLine("No such vehicle in the garage with this License number");
                         }
+
                         break;
                     case eService.PrintVehicleInfo:
                         PrintVehicleInfo(newGarageManager);
@@ -120,6 +173,7 @@ namespace Ex03.ConsoleUI
                         Console.WriteLine("Please choose a valide option from our service");
                         break;
                 }
+
                 Console.WriteLine("\n\n");
             }
         }
@@ -206,6 +260,7 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine("Please enter a valide vehicle license number");
                 inputLicenseNumberStr = Console.ReadLine();
             }
+
             licenseNumber = inputLicenseNumberStr;
             return licenseNumber;
         }
@@ -219,7 +274,7 @@ namespace Ex03.ConsoleUI
             string modelName = GetVehicleModleName();
             eEnergyType energyType = getEnergyInput(vehicleType);
             float maxEnergy = GetMaxEnergy(vehicleType);
-            float energyLeft = ChooseNumOf( energyType + " Left in the vehicle (float)", 0, maxEnergy);
+            float energyLeft = ChooseNumOf(energyType + " Left in the vehicle (float)", 0, maxEnergy);
             List<Wheel> wheelList = GetWheelList(vehicleType);
             Vehicle newVehicle;
             switch (vehicleType)
@@ -289,9 +344,11 @@ namespace Ex03.ConsoleUI
                     {
                         energyType = "maximum fuel capacity";
                     }
+
                     maxEnergy = ChooseNumOf(energyType);
                     break;
             }
+
             return maxEnergy;
         }
 
@@ -362,7 +419,7 @@ namespace Ex03.ConsoleUI
         // Get number of doors of the car from the user.
         private int GetNumOfDoors()
         {
-            int inputNumOfDoors = (int)ChooseNumOf("number of doors for the car ",2,5);
+            int inputNumOfDoors = (int) ChooseNumOf("number of doors for the car ", 2, 5);
             return inputNumOfDoors;
         }
         
@@ -455,6 +512,7 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine(counter + ")" + vehicleType);
                 counter++;
             }
+
             inputVehicleType = Console.ReadLine();
 
             switch (inputVehicleType)
@@ -510,6 +568,7 @@ namespace Ex03.ConsoleUI
                 Wheel newWheel = new Wheel(inputWheelManufacture, inputAirPressure, inputMaxPossiblePressure);
                 newWheelList.Add(newWheel);
             }
+
             return newWheelList;
         }
 
@@ -535,9 +594,10 @@ namespace Ex03.ConsoleUI
                     numOfWheels = 16;
                     break;
                 default:
-                    numOfWheels = (int)(ChooseNumOf("number of wheels (int)"));
+                    numOfWheels = (int) ChooseNumOf("number of wheels (int)");
                     break;
             }
+
             return numOfWheels;
         }
 
@@ -566,6 +626,7 @@ namespace Ex03.ConsoleUI
                     maxAirPressureInWheel = ChooseNumOf("maximum air pressure in wheel (float)");
                     break;
             }
+
             return maxAirPressureInWheel;
         }
 
@@ -595,6 +656,7 @@ namespace Ex03.ConsoleUI
                     newEnergyType = eEnergyType.DeFault;
                     break;
             }
+
             return newEnergyType;
         }
 
@@ -625,63 +687,6 @@ namespace Ex03.ConsoleUI
             }
 
             return energyType;
-        }
-
-        // UI for choosing one of the option in the serice enum list.
-        public static eService ServiceOptionChoose(List<Service> i_ServiceList)
-        {
-            Console.WriteLine("Please choose one of the following options:");
-            for (int service = 0; service < i_ServiceList.Count; service++)
-            {
-                Console.WriteLine((service + 1) + ") " + i_ServiceList[service].ServiceString);
-            }
-
-            Console.WriteLine((i_ServiceList.Count + 1) + ") Finish\n");
-            string inputNumStr = Console.ReadLine();
-            int inputServiceNumInt;
-            bool goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);
-            while (!goodInput || inputServiceNumInt < 1 || inputServiceNumInt > (i_ServiceList.Count + 1))
-            {
-                Console.WriteLine("Input is not valid. \nPlease choose a service number between the range " + 1 + " to " + (i_ServiceList.Count + 1) + ":");
-                inputNumStr = Console.ReadLine();
-                goodInput = int.TryParse(inputNumStr, out inputServiceNumInt);
-            }
-
-            return (eService)(inputServiceNumInt - 1);
-        }
-
-        // Helper to for taking floats input from user from a range of numbers.
-        public static float ChooseNumOf(string numToChoose, float startRange, float endRange)
-        {
-            System.Console.WriteLine("Please choose the number of " + numToChoose + ", between the range " + startRange + " to " + endRange + " (and then press 'enter'):");
-            string inputNumStr = Console.ReadLine();
-            float inputNumFloat;
-            bool goodInput = float.TryParse(inputNumStr, out inputNumFloat);
-            while (!goodInput || inputNumFloat < startRange || inputNumFloat > endRange)
-            {
-                Console.WriteLine("Input is not valid. \nPlease choose a number between the range " + startRange + " to " + endRange + ":");
-                inputNumStr = Console.ReadLine();
-                goodInput = float.TryParse(inputNumStr, out inputNumFloat);
-            }
-
-            return inputNumFloat;
-        }
-
-        // Helper to for taking floats input from user.
-        public static float ChooseNumOf(string numToChoose)
-        {
-            System.Console.WriteLine("Please choose the number of " + numToChoose + " :");
-            string inputNumStr = Console.ReadLine();
-            float inputNumFloat;
-            bool goodInput = float.TryParse(inputNumStr, out inputNumFloat);
-            while (!goodInput)
-            {
-                Console.WriteLine("Input is not valid. \nPlease choose a valide " + numToChoose + " :");
-                inputNumStr = Console.ReadLine();
-                goodInput = float.TryParse(inputNumStr, out inputNumFloat);
-            }
-
-            return inputNumFloat;
         }
     }
 }

@@ -16,9 +16,9 @@ namespace Ex03.GarageLogic
         public ValueOutOfRangeException(Exception i_InnerException, float i_MinValue, float i_MaxValue, string i_Message)
             : base(string.Format(i_Message, i_MinValue, i_MaxValue), i_InnerException)
         {
-            m_Message = i_Message;
-            m_MinValue = i_MinValue;
-            m_MaxValue = i_MaxValue;
+            this.m_Message = i_Message;
+            this.m_MinValue = i_MinValue;
+            this.m_MaxValue = i_MaxValue;
         }
 
         // Default m_Message Constructor
@@ -34,19 +34,19 @@ namespace Ex03.GarageLogic
         // Message gettter
         public override string Message
         {
-            get { return m_Message; }
+            get { return this.m_Message; }
         }
 
         // MinValue getter
         public float MinValue
         {
-            get { return MinValue; }
+            get { return this.MinValue; }
         }
 
         // MaxValue getter
         public float MaxValue
         {
-            get { return m_MaxValue; }
+            get { return this.m_MaxValue; }
         }
     }
 }
