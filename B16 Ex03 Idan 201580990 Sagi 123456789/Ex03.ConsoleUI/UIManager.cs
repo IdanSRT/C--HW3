@@ -74,9 +74,8 @@ namespace Ex03.ConsoleUI
                             Vehicle vehicleToFuel = newGarageManager.VehicleList[newGarageManager.IndexOfVehicle(licenseNumberForFuel)].Vehicle;
                             if (vehicleToFuel.EngineEnergyType != eEnergyType.Electricity)
                             {
-                                eEnergyType energyTypeToFuel = getEnergyType();
-                                float fuelToFill = ChooseNumOf("of fuel amount");
-                                newGarageManager.AddEnergy(licenseNumberForFuel, energyTypeToFuel, fuelToFill);
+                                newGarageManager.AddEnergy(licenseNumberForFuel);
+                                Console.WriteLine("We fueled your " + vehicleToFuel.GetType().Name + " to the maximum with " + vehicleToFuel.EngineEnergyType);
                             }
                             else
                             {
@@ -95,9 +94,8 @@ namespace Ex03.ConsoleUI
                             Vehicle vehicleToCharge = newGarageManager.VehicleList[newGarageManager.IndexOfVehicle(licenseNumberForCharge)].Vehicle;
                             if (vehicleToCharge.EngineEnergyType == eEnergyType.Electricity)
                             {
-                                eEnergyType energyTypeToFuel = eEnergyType.Electricity;
-                                float batteryToCharge = ChooseNumOf("of battery time to charge");
-                                newGarageManager.AddEnergy(licenseNumberForCharge, energyTypeToFuel, batteryToCharge);                                
+                                newGarageManager.AddEnergy(licenseNumberForCharge);
+                                Console.WriteLine("We Charged your " + vehicleToCharge.GetType().Name + " to the maximum with " + vehicleToCharge.EngineEnergyType);
                             }
                             else
                             {
@@ -505,7 +503,7 @@ namespace Ex03.ConsoleUI
                     inputWheelManufacture = Console.ReadLine();
                 }
 
-                inputAirPressure = ChooseNumOf("air pressoure in wheel No." + (numOfWheel + 1) + "(float)", 0, inputMaxPossiblePressure);
+                inputAirPressure = ChooseNumOf("air pressure in wheel No." + (numOfWheel + 1) + "(float)", 0, inputMaxPossiblePressure);
 
                 Wheel newWheel = new Wheel(inputWheelManufacture, inputAirPressure, inputMaxPossiblePressure);
                 newWheelList.Add(newWheel);
@@ -598,34 +596,6 @@ namespace Ex03.ConsoleUI
             return newEnergyType;
         }
 
-        // Get Energy type from the user. 
-        private eEnergyType getEnergyType()
-        {          
-            eEnergyType energyType = eEnergyType.DeFault;
-            Console.WriteLine("Choose the energy type you wish to feul :\n"
-                + "(1)Octan95\t(2)Octan96\t(3)Octan98\t(4)Soler\t(5)Other");
-            string inputEnergyType = Console.ReadLine();
-            switch (inputEnergyType)
-            {
-                case "1":
-                    energyType = eEnergyType.Octan95;
-                    break;
-                case "2":
-                    energyType = eEnergyType.Octan96;
-                    break;
-                case "3":
-                    energyType = eEnergyType.Octan98;
-                    break;
-                case "4":
-                    energyType = eEnergyType.Soler;
-                    break;
-                case "5":
-                    energyType = eEnergyType.DeFault;
-                    break;
-            }
-
-            return energyType;
-        }
 
         // UI for choosing one of the option in the serice enum list.
         public static eService ServiceOptionChoose(List<Service> i_ServiceList)
