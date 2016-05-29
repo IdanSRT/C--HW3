@@ -117,15 +117,24 @@ namespace Ex03.ConsoleUI
         }
 
         // (5)+(6) Fill up Fuel tank for motoric vehicle and charge battery.
-        public void AddEnergy(string i_LicenseNumber)
+        public void AddEnergy(string i_LicenseNumber, eEnergyType i_EnergyType, float i_EnergyAmount)
         {
             Vehicle currVehicle = m_VehiclesList[IndexOfVehicle(i_LicenseNumber)].Vehicle;
             eEnergyType vehicleEnergyType = currVehicle.m_EngineEnergyType;
-            if (vehicleEnergyType != eEnergyType.Electricity)
+            try
             {
-                float vehicleEnergyToAdd = currVehicle.EnergyLeft - currVehicle.MaxEnergy;
-                currVehicle.AddEnergy(vehicleEnergyType, vehicleEnergyToAdd);
+                currVehicle.AddEnergy(i_EnergyType, i_EnergyAmount);
+                Console.WriteLine("We added  to your " + currVehicle.GetType().Name + " " + currVehicle.EngineEnergyType  + " to the current value of " + currVehicle.EnergyLeft);
             }
+            catch (EnergyDoesNotMatchToEngine ednmte)
+            {
+                Console.WriteLine("Your " + currVehicle.GetType().Name + " do not use " + i_EnergyType + " try again using " + vehicleEnergyType);
+            }
+            catch (ValueOutOfRangeException voore)
+            {
+                Console.WriteLine("Your " + currVehicle.GetType().Name + " has maximum amount capacity of " + vehicleEnergyType + " which is " + currVehicle.MaxEnergy + " try again with lower amount");
+            }
+            
         }
 
         // (7)  Print vehicle information and status using reflection(part of didnt work on wheels).
